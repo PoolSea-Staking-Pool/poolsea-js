@@ -1,7 +1,7 @@
 {
 	"name": "@poolsea/api",
 	"version": "0.0.1",
-	"description": "A javascript library for interacting with the Rocket Pool network",
+	"description": "A javascript library for interacting with the Poolsea network",
 	"main": "dist/rocketpool/rocketpool.js",
 	"license": "MIT",
 	"scripts": {
@@ -12,13 +12,13 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/rocket-pool/rocketpool-js.git"
+		"url": "git+https://github.com/Seb369888/poolsea-js.git"
 	},
-	"author": "Rocket Pool",
+	"author": "Poolsea",
 	"bugs": {
-		"url": "https://github.com/rocket-pool/rocketpool-js/issues"
+		"url": "https://github.com/Seb369888/poolsea-js/issues"
 	},
-	"homepage": "https://github.com/rocket-pool/rocketpool-js#readme",
+	"homepage": "https://github.com/Seb369888/poolsea-js#readme",
 	"dependencies": {
 		"@types/node": "^14.14.37",
 		"pako": "^1.0.11",
