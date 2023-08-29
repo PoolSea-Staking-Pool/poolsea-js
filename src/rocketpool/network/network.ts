@@ -22,7 +22,7 @@ class Network {
 	 * @returns a Promise<Contract\> with a web3.eth.contract instance of the rocketNetworkBalances contract
 	 */
 	private get rocketNetworkBalances(): Promise<Contract> {
-		return this.contracts.get("rocketNetworkBalances");
+		return this.contracts.get("poolseaNetworkBalances");
 	}
 
 	/**
@@ -30,7 +30,7 @@ class Network {
 	 * @returns a Promise<Contract\> with a web3.eth.contract instance of the rocketNetworkFees contract
 	 */
 	private get rocketNetworkFees(): Promise<Contract> {
-		return this.contracts.get("rocketNetworkFees");
+		return this.contracts.get("poolseaNetworkFees");
 	}
 
 	/**
@@ -38,7 +38,7 @@ class Network {
 	 * @returns a Promise<Contract\> with a web3.eth.contract instance of the rocketNetworkPrices contract
 	 */
 	private get rocketNetworkPrices(): Promise<Contract> {
-		return this.contracts.get("rocketNetworkPrices");
+		return this.contracts.get("poolseaNetworkPrices");
 	}
 
 	/**

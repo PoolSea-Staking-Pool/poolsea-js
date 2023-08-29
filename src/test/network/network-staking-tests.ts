@@ -136,14 +136,14 @@ export default function runNetworkStakingTests(web3: Web3, rp: RocketPool) {
 			] = await web3.eth.getAccounts();
 
 			// Disable RocketClaimNode claims contract
-			await setDAONetworkBootstrapRewardsClaimer(web3, rp, "rocketClaimNode", web3.utils.toWei("0", "ether"), { from: owner, gas: gasLimit });
+			await setDAONetworkBootstrapRewardsClaimer(web3, rp, "poolseaClaimNode", web3.utils.toWei("0", "ether"), { from: owner, gas: gasLimit });
 
 			// Set settings
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsMinipool", "minipool.launch.timeout", launchTimeout, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsMinipool", "minipool.launch.timeout", launchTimeout, {
 				from: owner,
 				gas: gasLimit,
 			});
-			await setDAONodeTrustedBootstrapSetting(web3, rp, "rocketDAONodeTrustedSettingsMinipool", "minipool.scrub.period", scrubPeriod, {
+			await setDAONodeTrustedBootstrapSetting(web3, rp, "poolseaDAONodeTrustedSettingsMinipool", "minipool.scrub.period", scrubPeriod, {
 				from: owner,
 				gas: gasLimit,
 			});
@@ -179,7 +179,7 @@ export default function runNetworkStakingTests(web3: Web3, rp: RocketPool) {
 			});
 
 			// Register trusted node
-			await setNodeTrusted(web3, rp, trustedNode, "rocketpool_1", "node@home.com", owner);
+			await setNodeTrusted(web3, rp, trustedNode, "poolseapool_1", "node@home.com", owner);
 
 			// Set node 1 withdrawal address
 			await setNodeWithdrawalAddress(web3, rp, registeredNode1, node1WithdrawalAddress, {
@@ -195,7 +195,7 @@ export default function runNetworkStakingTests(web3: Web3, rp: RocketPool) {
 			await setDAOProtocolBootstrapSetting(
 				web3,
 				rp,
-				"rocketDAOProtocolSettingsNode",
+				"poolseaDAOProtocolSettingsNode",
 				"node.per.minipool.stake.maximum",
 				web3.utils.toWei(maxStakePerMinipool, "ether"),
 				{
@@ -400,12 +400,12 @@ export default function runNetworkStakingTests(web3: Web3, rp: RocketPool) {
 		it(printTitle("node1", "cannot stake RPL while network is not in consensus"), async () => {
 			const priceFrequency = 50;
 			// Set price frequency to a low value so we can mine fewer blocks
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsNetwork", "network.submit.prices.frequency", priceFrequency, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsNetwork", "network.submit.prices.frequency", priceFrequency, {
 				from: owner,
 				gas: gasLimit,
 			});
 			// Set withdrawal cooldown to 0
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsRewards", "rpl.rewards.claim.period.time", 0, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsRewards", "rpl.rewards.claim.period.time", 0, {
 				from: owner,
 				gas: gasLimit,
 			});
@@ -502,12 +502,12 @@ export default function runNetworkStakingTests(web3: Web3, rp: RocketPool) {
 		it(printTitle("node1", "cannot mark a minipool as withdrawable while network is not in consensus"), async () => {
 			const priceFrequency = 50;
 			// Set price frequency to a low value so we can mine fewer blocks
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsNetwork", "network.submit.prices.frequency", priceFrequency, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsNetwork", "network.submit.prices.frequency", priceFrequency, {
 				from: owner,
 				gas: gasLimit,
 			});
 			// Set withdrawal cooldown to 0
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsRewards", "rpl.rewards.claim.period.time", 0, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsRewards", "rpl.rewards.claim.period.time", 0, {
 				from: owner,
 				gas: gasLimit,
 			});

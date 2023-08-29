@@ -12,8 +12,8 @@ let minipoolSalt = 0;
 // Make a node deposit
 export async function deposit(web3: Web3, rp: RocketPool, minimumNodeFee: string, options: SendOptions) {
 	// Get contract addresses
-	const rocketMinipoolManager = await rp.contracts.get("rocketMinipoolManager");
-	const rocketStorage = await rp.contracts.get("rocketStorage");
+	const rocketMinipoolManager = await rp.contracts.get("poolseaMinipoolManager");
+	const rocketStorage = await rp.contracts.get("poolseaStorage");
 
 	// Get minipool counts
 	function getMinipoolCounts(nodeAddress: string) {

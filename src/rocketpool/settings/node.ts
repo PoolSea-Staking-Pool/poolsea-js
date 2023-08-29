@@ -20,7 +20,7 @@ class NodeSettings {
 	 * @returns a Promise<Contract\> with a web3.eth.contract instance of the rocketDAOProtocolSettingsNode contract
 	 */
 	private get rocketDAOProtocolSettingsNode(): Promise<Contract> {
-		return this.contracts.get("rocketDAOProtocolSettingsNode");
+		return this.contracts.get("poolseaDAOProtocolSettingsNode");
 	}
 
 	/**

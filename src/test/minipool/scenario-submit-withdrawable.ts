@@ -8,10 +8,10 @@ import MinipoolContract from "../../rocketpool/minipool/minipool-contract";
 // Submit a minipool withdrawable event
 export async function submitWithdrawable(web3: Web3, rp: RocketPool, minipoolAddress: string, options: SendOptions) {
 	// Load contracts
-	const rocketDAONodeTrusted = await rp.contracts.get("rocketDAONodeTrusted");
-	const rocketNodeStaking = await rp.contracts.get("rocketNodeStaking");
-	const rocketStorage = await rp.contracts.get("rocketStorage");
-	const rocketMinipoolStatus = await rp.contracts.get("rocketMinipoolStatus");
+	const rocketDAONodeTrusted = await rp.contracts.get("poolseaDAONodeTrusted");
+	const rocketNodeStaking = await rp.contracts.get("poolseaNodeStaking");
+	const rocketStorage = await rp.contracts.get("poolseaStorage");
+	const rocketMinipoolStatus = await rp.contracts.get("poolseaMinipoolStatus");
 
 	// Get parameters
 	const trustedNodeCount = await rocketDAONodeTrusted.methods
@@ -89,8 +89,8 @@ export async function submitWithdrawable(web3: Web3, rp: RocketPool, minipoolAdd
 // Execute a minipool withdrawable update event
 export async function executeSetWithdrawable(web3: Web3, rp: RocketPool, minipoolAddress: string, options: SendOptions) {
 	// Load contracts
-	const rocketNodeStaking = await rp.contracts.get("rocketNodeStaking");
-	const rocketMinipoolStatus = await rp.contracts.get("rocketMinipoolStatus");
+	const rocketNodeStaking = await rp.contracts.get("poolseaNodeStaking");
+	const rocketMinipoolStatus = await rp.contracts.get("poolseaMinipoolStatus");
 
 	// Get minipool details
 	function getMinipoolDetails() {

@@ -22,7 +22,7 @@ class DAONodeTrustedSettings {
 	 * @returns a Promise<Contract\> with a web3.eth.contract instance of the rocketDAONodeTrustedSettingsProposals contract
 	 */
 	private get rocketDAONodeTrustedSettingsProposals(): Promise<Contract> {
-		return this.contracts.get("rocketDAONodeTrustedSettingsProposals");
+		return this.contracts.get("poolseaDAONodeTrustedSettingsProposals");
 	}
 
 	/**
@@ -30,7 +30,7 @@ class DAONodeTrustedSettings {
 	 * @returns a Promise<Contract\> with a web3.eth.contract instance of the rocketDAONodeTrustedSettingsMembers contract
 	 */
 	private get rocketDAONodeTrustedSettingsMembers(): Promise<Contract> {
-		return this.contracts.get("rocketDAONodeTrustedSettingsMembers");
+		return this.contracts.get("poolseaDAONodeTrustedSettingsMembers");
 	}
 
 	/**
@@ -38,7 +38,7 @@ class DAONodeTrustedSettings {
 	 * @returns a Promise<Contract\> with a web3.eth.contract instance of the rocketDAOProtocolSettingsDeposit contract
 	 */
 	private get rocketDAOProtocolSettingsDeposit(): Promise<Contract> {
-		return this.contracts.get("rocketDAOProtocolSettingsDeposit");
+		return this.contracts.get("poolseaDAOProtocolSettingsDeposit");
 	}
 
 	/**
@@ -46,7 +46,7 @@ class DAONodeTrustedSettings {
 	 * @returns a Promise<Contract\> with a web3.eth.contract instance of the rocketDAOProtocolSettingsMinipool contract
 	 */
 	private get rocketDAOProtocolSettingsMinipool(): Promise<Contract> {
-		return this.contracts.get("rocketDAOProtocolSettingsMinipool");
+		return this.contracts.get("poolseaDAOProtocolSettingsMinipool");
 	}
 
 	/**

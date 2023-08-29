@@ -40,7 +40,7 @@ export async function setDAONodeTrustedBootstrapSetting(
 	options: SendOptions
 ) {
 	// Load contracts
-	const rocketDAONodeTrusted = await rp.contracts.get("rocketDAONodeTrusted");
+	const rocketDAONodeTrusted = await rp.contracts.get("poolseaDAONodeTrusted");
 	const rocketDAONodeTrustedSettingsContract = await rp.contracts.get(_settingContractInstance);
 
 	// Get data about the tx
@@ -78,7 +78,7 @@ export async function setDAONodeTrustedBootstrapSetting(
 // Disable bootstrap mode
 export async function setDaoNodeTrustedBootstrapModeDisabled(web3: Web3, rp: RocketPool, options: SendOptions) {
 	// Load contracts
-	const rocketDAONodeTrusted = await rp.contracts.get("rocketDAONodeTrusted");
+	const rocketDAONodeTrusted = await rp.contracts.get("poolseaDAONodeTrusted");
 
 	// Get data about the tx
 	function getTxData() {
@@ -111,7 +111,7 @@ export async function setDaoNodeTrustedBootstrapUpgrade(
 	options: SendOptions
 ) {
 	// Load contracts
-	const [rocketStorage, rocketDAONodeTrusted] = await Promise.all([await rp.contracts.get("rocketStorage"), await rp.contracts.get("rocketDAONodeTrusted")]);
+	const [rocketStorage, rocketDAONodeTrusted] = await Promise.all([await rp.contracts.get("poolseaStorage"), await rp.contracts.get("poolseaDAONodeTrusted")]);
 
 	// Add test method to ABI
 	let compressedAbi = "";
@@ -202,7 +202,7 @@ export async function setDaoNodeTrustedMemberRequired(web3: Web3, rp: RocketPool
 		return Promise.all([
 			rp.dao.node.trusted.node.getMemberCount().then((value: any) => web3.utils.toBN(value)),
 			rp.tokens.rpl.balanceOf(options.from).then((value: any) => web3.utils.toBN(value)),
-			rp.vault.balanceOfToken("rocketDAONodeTrustedActions", rocketTokenRPLAddress).then((value: any) => web3.utils.toBN(value)),
+			rp.vault.balanceOfToken("poolseaDAONodeTrustedActions", rocketTokenRPLAddress).then((value: any) => web3.utils.toBN(value)),
 		]).then(([memberTotal, rplBalanceBond, rplBalanceVault]) => ({
 			memberTotal,
 			rplBalanceBond,
@@ -228,5 +228,5 @@ export async function setDaoNodeTrustedMemberRequired(web3: Web3, rp: RocketPool
 
 	// Check member count has increased
 	assert(ds2.memberTotal.eq(ds1.memberTotal.add(web3.utils.toBN(1))), "Member count has not increased");
-	assert(ds2.rplBalanceVault.eq(ds1.rplBalanceVault.add(ds1.rplBalanceBond)), "RocketVault address does not contain the correct RPL bond amount");
+	assert(ds2.rplBalanceVault.eq(ds1.rplBalanceVault.add(ds1.rplBalanceBond)), "poolseaVault address does not contain the correct RPL bond amount");
 }

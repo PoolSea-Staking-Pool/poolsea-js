@@ -86,21 +86,21 @@ export default function runMinipoolScrubTests(web3: Web3, rp: RocketPool) {
 			await setNodeTrusted(web3, rp, trustedNode3, "saas_3", "node@home.com", owner);
 
 			// Set a small proposal cooldown
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsMinipool", "minipool.launch.timeout", launchTimeout, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsMinipool", "minipool.launch.timeout", launchTimeout, {
 				from: owner,
 				gas: gasLimit,
 			});
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsMinipool", "minipool.withdrawal.delay", withdrawalDelay, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsMinipool", "minipool.withdrawal.delay", withdrawalDelay, {
 				from: owner,
 				gas: gasLimit,
 			});
-			await setDAONodeTrustedBootstrapSetting(web3, rp, "rocketDAONodeTrustedSettingsMinipool", "minipool.scrub.period", scrubPeriod, {
+			await setDAONodeTrustedBootstrapSetting(web3, rp, "poolseaDAONodeTrustedSettingsMinipool", "minipool.scrub.period", scrubPeriod, {
 				from: owner,
 				gas: gasLimit,
 			});
 
 			// Set rETH collateralisation target to a value high enough it won't cause excess ETH to be funneled back into deposit pool and mess with our calcs
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsNetwork", "network.reth.collateral.target", web3.utils.toWei("50", "ether"), {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsNetwork", "network.reth.collateral.target", web3.utils.toWei("50", "ether"), {
 				from: owner,
 				gas: gasLimit,
 			});
@@ -199,7 +199,7 @@ export default function runMinipoolScrubTests(web3: Web3, rp: RocketPool) {
 
 		it(printTitle("trusted node", "can scrub a prelaunch minipool (with penalty)"), async () => {
 			// Enabled penalty
-			await setDAONodeTrustedBootstrapSetting(web3, rp, "rocketDAONodeTrustedSettingsMinipool", "minipool.scrub.penalty.enabled", true, {
+			await setDAONodeTrustedBootstrapSetting(web3, rp, "poolseaDAONodeTrustedSettingsMinipool", "minipool.scrub.penalty.enabled", true, {
 				from: owner,
 				gas: gasLimit,
 			});
@@ -234,7 +234,7 @@ export default function runMinipoolScrubTests(web3: Web3, rp: RocketPool) {
 		//
 		it(printTitle("guardian", "can not set launch timeout lower than scrub period"), async () => {
 			await shouldRevert(
-				setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsMinipool", "minipool.launch.timeout", scrubPeriod - 1, {
+				setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsMinipool", "minipool.launch.timeout", scrubPeriod - 1, {
 					from: owner,
 					gas: gasLimit,
 				}),
@@ -245,7 +245,7 @@ export default function runMinipoolScrubTests(web3: Web3, rp: RocketPool) {
 
 		it(printTitle("guardian", "can not set scrub period higher than launch timeout"), async () => {
 			await shouldRevert(
-				setDAONodeTrustedBootstrapSetting(web3, rp, "rocketDAONodeTrustedSettingsMinipool", "minipool.scrub.period", launchTimeout + 1, {
+				setDAONodeTrustedBootstrapSetting(web3, rp, "poolseaDAONodeTrustedSettingsMinipool", "minipool.scrub.period", launchTimeout + 1, {
 					from: owner,
 					gas: gasLimit,
 				}),

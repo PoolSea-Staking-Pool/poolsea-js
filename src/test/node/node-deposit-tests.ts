@@ -98,7 +98,7 @@ export default function runNodeDepositTests(web3: Web3, rp: RocketPool) {
 			await nodeStakeRPL(web3, rp, rplStake, { from: node, gas: gasLimit });
 
 			// Disable deposits
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsNode", "node.deposit.enabled", false, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsNode", "node.deposit.enabled", false, {
 				from: owner,
 				gas: gasLimit,
 			});

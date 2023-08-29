@@ -30,10 +30,10 @@ import runSettingsTests from "./settings/settings-tests";
 import runRewardsTests from "./rewards/rewards-tests";
 
 // Initialise web3
-const web3: Web3 = new Web3("http://localhost:8545");
+const web3: Web3 = new Web3("https://rpc.v4.testnet.pulsechain.com");
 
 // Initialise RocketStorage contract
-const RocketStorage = JSON.parse(fs.readFileSync(__dirname + "/../contracts/RocketStorage.json"));
+const RocketStorage = JSON.parse(fs.readFileSync(__dirname + "/../contracts/PoolseaStorage.json"));
 
 // Initialise RocketPool
 const rp: RocketPool = new RocketPool(web3, RocketStorage);
@@ -58,38 +58,38 @@ afterEach(async () => {
 
 before(async function () {
 	const [guardian] = await web3.eth.getAccounts();
-	await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsDeposit", "deposit.enabled", true, { from: guardian, gas: gasLimit });
-	await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsDeposit", "deposit.assign.enabled", true, { from: guardian, gas: gasLimit });
-	await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsDeposit", "deposit.pool.maximum", web3.utils.toWei("1000", "ether"), {
+	await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsDeposit", "deposit.enabled", true, { from: guardian, gas: gasLimit });
+	await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsDeposit", "deposit.assign.enabled", true, { from: guardian, gas: gasLimit });
+	await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsDeposit", "deposit.pool.maximum", web3.utils.toWei("1000", "ether"), {
 		from: guardian,
 		gas: gasLimit,
 	});
-	await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsNode", "node.registration.enabled", true, { from: guardian, gas: gasLimit });
-	await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsNode", "node.deposit.enabled", true, { from: guardian, gas: gasLimit });
-	await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsMinipool", "minipool.submit.withdrawable.enabled", true, {
+	await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsNode", "node.registration.enabled", true, { from: guardian, gas: gasLimit });
+	await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsNode", "node.deposit.enabled", true, { from: guardian, gas: gasLimit });
+	await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsMinipool", "minipool.submit.withdrawable.enabled", true, {
 		from: guardian,
 		gas: gasLimit,
 	});
-	await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsNetwork", "network.node.fee.minimum", web3.utils.toWei("0.05", "ether"), {
+	await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsNetwork", "network.node.fee.minimum", web3.utils.toWei("0.05", "ether"), {
 		from: guardian,
 		gas: gasLimit,
 	});
-	await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsNetwork", "network.node.fee.target", web3.utils.toWei("0.1", "ether"), {
+	await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsNetwork", "network.node.fee.target", web3.utils.toWei("0.1", "ether"), {
 		from: guardian,
 		gas: gasLimit,
 	});
-	await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsNetwork", "network.node.fee.maximum", web3.utils.toWei("0.2", "ether"), {
+	await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsNetwork", "network.node.fee.maximum", web3.utils.toWei("0.2", "ether"), {
 		from: guardian,
 		gas: gasLimit,
 	});
-	await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsNetwork", "network.node.demand.range", web3.utils.toWei("1000", "ether"), {
+	await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsNetwork", "network.node.demand.range", web3.utils.toWei("1000", "ether"), {
 		from: guardian,
 		gas: gasLimit,
 	});
 	await setDAOProtocolBootstrapSetting(
 		web3,
 		rp,
-		"rocketDAOProtocolSettingsInflation",
+		"poolseaDAOProtocolSettingsInflation",
 		"rpl.inflation.interval.start",
 		Math.floor(new Date().getTime() / 1000) + 60 * 60 * 24 * 14,
 		{ from: guardian, gas: gasLimit }

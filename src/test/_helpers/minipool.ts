@@ -24,8 +24,8 @@ export async function getNodeActiveMinipoolCount(web3: Web3, rp: RocketPool, nod
 // Get the minimum required RPL stake for a minipool
 export async function getMinipoolMinimumRPLStake(web3: Web3, rp: RocketPool) {
 	// Load contracts
-	const rocketDAOProtocolSettingsMinipool = await rp.contracts.get("rocketDAOProtocolSettingsMinipool");
-	const rocketDAOProtocolSettingsNode = await rp.contracts.get("rocketDAOProtocolSettingsNode");
+	const rocketDAOProtocolSettingsMinipool = await rp.contracts.get("poolseaDAOProtocolSettingsMinipool");
+	const rocketDAOProtocolSettingsNode = await rp.contracts.get("poolseaDAOProtocolSettingsNode");
 
 	// Load data
 	const [depositUserAmount, minMinipoolStake, rplPrice] = await Promise.all([
@@ -48,11 +48,11 @@ export async function getMinipoolMinimumRPLStake(web3: Web3, rp: RocketPool) {
 let minipoolSalt = 1;
 export async function createMinipool(web3: Web3, rp: RocketPool, options: SendOptions, salt: number | null = null): Promise<MinipoolContract | null> {
 	// Get contracts
-	const rocketMinipoolManager = await rp.contracts.get("rocketMinipoolManager");
-	const rocketStorage = await rp.contracts.get("rocketStorage");
+	const rocketMinipoolManager = await rp.contracts.get("poolseaMinipoolManager");
+	const rocketStorage = await rp.contracts.get("poolseaStorage");
 
 	// Get contract addresses
-	const minipoolManagerAddress = await rp.contracts.address("rocketMinipoolManager");
+	const minipoolManagerAddress = await rp.contracts.address("poolseaMinipoolManager");
 
 	// Get artifact and bytecode
 	const rocketMinipool = require("../../contracts/RocketMinipool.json");

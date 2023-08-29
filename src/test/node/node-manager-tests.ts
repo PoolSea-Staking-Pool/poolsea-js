@@ -71,7 +71,7 @@ export default function runNodeManagerTests(web3: Web3, rp: RocketPool) {
 
 		it(printTitle("node operator", "cannot register a node while registrations are disabled"), async () => {
 			// Disable registrations
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsNode", "node.registration.enabled", false, { from: owner });
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsNode", "node.registration.enabled", false, { from: owner });
 
 			// Attempt registration
 			await shouldRevert(
@@ -80,7 +80,7 @@ export default function runNodeManagerTests(web3: Web3, rp: RocketPool) {
 					gas: gasLimit,
 				}),
 				"Registered a node while registrations were disabled",
-				"Rocket Pool node registrations are currently disabled"
+				"poolsea Pool node registrations are currently disabled"
 			);
 		});
 

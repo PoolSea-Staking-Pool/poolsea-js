@@ -12,7 +12,7 @@ export async function rewardsClaimNode(web3: Web3, rp: RocketPool, options: Send
 	// Get details
 	function getDetails() {
 		return Promise.all([
-			rp.rewards.pool.getClaimingContractAllowance("rocketClaimNode").then((value: any) => web3.utils.toBN(value)),
+			rp.rewards.pool.getClaimingContractAllowance("poolseaClaimNode").then((value: any) => web3.utils.toBN(value)),
 			rp.node.getNodeTotalEffectiveRPLStake().then((value: any) => web3.utils.toBN(value)),
 			rp.node.getNodeEffectiveRPLStake(options.from).then((value: any) => web3.utils.toBN(value)),
 		]).then(([nodesRplShare, totalRplStake, nodeRplStake]) => ({

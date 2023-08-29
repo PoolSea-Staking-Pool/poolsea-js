@@ -15,8 +15,8 @@ export async function submitBalances(
 	options: SendOptions
 ) {
 	// Load contracts
-	const rocketDAONodeTrusted = await rp.contracts.get("rocketDAONodeTrusted");
-	const rocketStorage = await rp.contracts.get("rocketStorage");
+	const rocketDAONodeTrusted = await rp.contracts.get("poolseaDAONodeTrusted");
+	const rocketStorage = await rp.contracts.get("poolseaStorage");
 
 	// Get parameters
 	const trustedNodeCount = await rocketDAONodeTrusted.methods

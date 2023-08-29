@@ -10,10 +10,10 @@ export async function voteScrub(web3: Web3, rp: RocketPool, minipool: MinipoolCo
 	// Get minipool owner
 	const nodeAddress = await minipool.getNodeAddress();
 	// Get contracts
-	const rocketVault = await rp.contracts.get("rocketVault");
-	const rocketTokenRPL = await rp.contracts.get("rocketTokenRPL");
-	const rocketDAONodeTrustedSettingsMinipool = await rp.contracts.get("rocketDAONodeTrustedSettingsMinipool");
-	const rocketDAOProtocolSettingsNode = await rp.contracts.get("rocketDAOProtocolSettingsNode");
+	const rocketVault = await rp.contracts.get("poolseaVault");
+	const rocketTokenRPL = await rp.contracts.get("poolseaTokenRPL");
+	const rocketDAONodeTrustedSettingsMinipool = await rp.contracts.get("poolseaDAONodeTrustedSettingsMinipool");
+	const rocketDAOProtocolSettingsNode = await rp.contracts.get("poolseaDAOProtocolSettingsNode");
 
 	// Get minipool details
 	function getMinipoolDetails() {
@@ -23,7 +23,7 @@ export async function voteScrub(web3: Web3, rp: RocketPool, minipool: MinipoolCo
 			minipool.getTotalScrubVotes().then((value: any) => web3.utils.toBN(value)),
 			rp.node.getNodeRPLStake(nodeAddress).then((value: any) => web3.utils.toBN(value)),
 			rocketVault.methods
-				.balanceOfToken("rocketAuctionManager", rocketTokenRPL.options.address)
+				.balanceOfToken("poolseaAuctionManager", rocketTokenRPL.options.address)
 				.call()
 				.then((value: any) => web3.utils.toBN(value)),
 			rocketDAONodeTrustedSettingsMinipool.methods.getScrubPenaltyEnabled().call(),

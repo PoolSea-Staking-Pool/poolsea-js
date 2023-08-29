@@ -117,7 +117,7 @@ export default function runAuctionTests(web3: Web3, rp: RocketPool) {
 			await withdrawValidatorBalance(web3, rp, minipool, "0", node, true);
 
 			// Disable lot creation
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsAuction", "auction.lot.create.enabled", false, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsAuction", "auction.lot.create.enabled", false, {
 				from: owner,
 				gas: gasLimit,
 			});
@@ -145,15 +145,15 @@ export default function runAuctionTests(web3: Web3, rp: RocketPool) {
 
 		it(printTitle("auction lot", "has correct price at block"), async () => {
 			// Set lot settings
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsAuction", "auction.lot.duration", 100, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsAuction", "auction.lot.duration", 100, {
 				from: owner,
 				gas: gasLimit,
 			});
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsAuction", "auction.price.start", web3.utils.toWei("1", "ether"), {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsAuction", "auction.price.start", web3.utils.toWei("1", "ether"), {
 				from: owner,
 				gas: gasLimit,
 			});
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsAuction", "auction.price.reserve", web3.utils.toWei("0", "ether"), {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsAuction", "auction.price.reserve", web3.utils.toWei("0", "ether"), {
 				from: owner,
 				gas: gasLimit,
 			});
@@ -308,7 +308,7 @@ export default function runAuctionTests(web3: Web3, rp: RocketPool) {
 			await auctionCreateLot(web3, rp, { from: random1, gas: gasLimit });
 
 			// Disable bidding
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsAuction", "auction.lot.bidding.enabled", false, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsAuction", "auction.lot.bidding.enabled", false, {
 				from: owner,
 				gas: gasLimit,
 			});
@@ -346,7 +346,7 @@ export default function runAuctionTests(web3: Web3, rp: RocketPool) {
 
 		it(printTitle("random address", "cannot bid on a lot after the lot bidding period has concluded"), async () => {
 			// Set lot duration
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsAuction", "auction.lot.duration", 0, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsAuction", "auction.lot.duration", 0, {
 				from: owner,
 				gas: gasLimit,
 			});
@@ -527,7 +527,7 @@ export default function runAuctionTests(web3: Web3, rp: RocketPool) {
 
 		it(printTitle("random address", "can recover unclaimed RPL from a lot"), async () => {
 			// Create closed lots
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsAuction", "auction.lot.duration", 0, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsAuction", "auction.lot.duration", 0, {
 				from: owner,
 				gas: gasLimit,
 			});
@@ -554,7 +554,7 @@ export default function runAuctionTests(web3: Web3, rp: RocketPool) {
 
 		it(printTitle("random address", "cannot recover unclaimed RPL from a lot which doesn't exist"), async () => {
 			// Create closed lot
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsAuction", "auction.lot.duration", 0, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsAuction", "auction.lot.duration", 0, {
 				from: owner,
 				gas: gasLimit,
 			});
@@ -598,7 +598,7 @@ export default function runAuctionTests(web3: Web3, rp: RocketPool) {
 
 		it(printTitle("random address", "cannot recover unclaimed RPL from a lot twice"), async () => {
 			// Create closed lot
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsAuction", "auction.lot.duration", 0, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsAuction", "auction.lot.duration", 0, {
 				from: owner,
 				gas: gasLimit,
 			});
@@ -628,7 +628,7 @@ export default function runAuctionTests(web3: Web3, rp: RocketPool) {
 
 		it(printTitle("random address", "cannot recover unclaimed RPL from a lot which has no RPL to recover"), async () => {
 			// Set lot duration
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsAuction", "auction.lot.duration", 10, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsAuction", "auction.lot.duration", 10, {
 				from: owner,
 				gas: gasLimit,
 			});

@@ -83,21 +83,21 @@ export default function runMinipoolWithdrawalTests(web3: Web3, rp: RocketPool) {
 			await setNodeTrusted(web3, rp, trustedNode, "saas_1", "node@home.com", owner);
 
 			// Set settings
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsMinipool", "minipool.launch.timeout", launchTimeout, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsMinipool", "minipool.launch.timeout", launchTimeout, {
 				from: owner,
 				gas: gasLimit,
 			});
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsMinipool", "minipool.withdrawal.delay", withdrawalDelay, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsMinipool", "minipool.withdrawal.delay", withdrawalDelay, {
 				from: owner,
 				gas: gasLimit,
 			});
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsMinipool", "minipool.scrub.period", scrubPeriod, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsMinipool", "minipool.scrub.period", scrubPeriod, {
 				from: owner,
 				gas: gasLimit,
 			});
 
 			// Set rETH collateralisation target to a value high enough it won't cause excess ETH to be funneled back into deposit pool and mess with our calcs
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsNetwork", "network.reth.collateral.target", web3.utils.toWei("50", "ether"), {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsNetwork", "network.reth.collateral.target", web3.utils.toWei("50", "ether"), {
 				from: owner,
 				gas: gasLimit,
 			});
@@ -107,7 +107,7 @@ export default function runMinipoolWithdrawalTests(web3: Web3, rp: RocketPool) {
 			await submitPrices(web3, rp, block, web3.utils.toWei("1", "ether"), "0", { from: trustedNode, gas: gasLimit });
 
 			// Add penalty helper contract
-			const rocketStorage = await rp.contracts.get("rocketStorage");
+			const rocketStorage = await rp.contracts.get("poolseaStorage");
 			const penaltyTest = require("../../contracts/PenaltyTest.json");
 
 			const penaltyTestContractInstance = new web3.eth.Contract(penaltyTest.abi);
@@ -118,26 +118,26 @@ export default function runMinipoolWithdrawalTests(web3: Web3, rp: RocketPool) {
 				})
 				.send({ from: owner, gas: gasLimit });
 
-			await setDaoNodeTrustedBootstrapUpgrade(web3, rp, "addContract", "rocketPenaltyTest", penaltyTest.abi, penaltyTestContract.options.address, {
+			await setDaoNodeTrustedBootstrapUpgrade(web3, rp, "addContract", "poolseaPenaltyTest", penaltyTest.abi, penaltyTestContract.options.address, {
 				from: owner,
 				gas: gasLimit,
 			});
 
 			// Enable penalties
-			const rocketMinipoolPenalty = await rp.contracts.get("rocketMinipoolPenalty");
+			const rocketMinipoolPenalty = await rp.contracts.get("poolseaMinipoolPenalty");
 			await rocketMinipoolPenalty.methods.setMaxPenaltyRate(maxPenaltyRate).send({ from: owner, gas: gasLimit });
 
 			// Hard code fee to 50%
 			const fee = web3.utils.toWei("0.5", "ether");
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsNetwork", "network.node.fee.minimum", fee, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsNetwork", "network.node.fee.minimum", fee, {
 				from: owner,
 				gas: gasLimit,
 			});
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsNetwork", "network.node.fee.target", fee, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsNetwork", "network.node.fee.target", fee, {
 				from: owner,
 				gas: gasLimit,
 			});
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsNetwork", "network.node.fee.maximum", fee, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsNetwork", "network.node.fee.maximum", fee, {
 				from: owner,
 				gas: gasLimit,
 			});
@@ -215,7 +215,7 @@ export default function runMinipoolWithdrawalTests(web3: Web3, rp: RocketPool) {
 
 		async function slashAndCheck(from: string, expectedSlash: string) {
 			const expectedSlashBN = web3.utils.toBN(expectedSlash);
-			const rocketNodeStaking = await rp.contracts.get("rocketNodeStaking");
+			const rocketNodeStaking = await rp.contracts.get("poolseaNodeStaking");
 			const rplStake1 = await rocketNodeStaking.methods
 				.getNodeRPLStake(node)
 				.call()
@@ -448,7 +448,7 @@ export default function runMinipoolWithdrawalTests(web3: Web3, rp: RocketPool) {
 
 		it(printTitle("guardian", "can disable penalising all together"), async () => {
 			// Disable penalising by setting rate to 0
-			const rocketMinipoolPenalty = await rp.contracts.get("rocketMinipoolPenalty");
+			const rocketMinipoolPenalty = await rp.contracts.get("poolseaMinipoolPenalty");
 			await rocketMinipoolPenalty.methods.setMaxPenaltyRate("0").send({ from: owner, gas: gasLimit });
 			// Try to penalise the minipool 50%
 			await penaltyTestContract.methods.setPenaltyRate(minipool.address, web3.utils.toWei("0.5")).call();

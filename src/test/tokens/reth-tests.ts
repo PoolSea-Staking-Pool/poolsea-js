@@ -89,19 +89,19 @@ export default function runRethTests(web3: Web3, rp: RocketPool) {
 			await setNodeTrusted(web3, rp, trustedNode, "saas_1", "node@home.com", owner);
 
 			// Set settings
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsNetwork", "network.reth.collateral.target", web3.utils.toWei("1", "ether"), {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsNetwork", "network.reth.collateral.target", web3.utils.toWei("1", "ether"), {
 				from: owner,
 				gas: gasLimit,
 			});
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsNetwork", "network.submit.prices.frequency", submitPricesFrequency, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsNetwork", "network.submit.prices.frequency", submitPricesFrequency, {
 				from: owner,
 				gas: gasLimit,
 			});
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsNetwork", "network.reth.deposit.delay", depositDelay, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsNetwork", "network.reth.deposit.delay", depositDelay, {
 				from: owner,
 				gas: gasLimit,
 			});
-			await setDAONodeTrustedBootstrapSetting(web3, rp, "rocketDAONodeTrustedSettingsMinipool", "minipool.scrub.period", scrubPeriod, {
+			await setDAONodeTrustedBootstrapSetting(web3, rp, "poolseaDAONodeTrustedSettingsMinipool", "minipool.scrub.period", scrubPeriod, {
 				from: owner,
 				gas: gasLimit,
 			});

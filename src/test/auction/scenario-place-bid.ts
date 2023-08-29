@@ -7,7 +7,7 @@ import { SendOptions } from "web3-eth-contract";
 // Place a bid on a lot
 export async function placeBid(web3: Web3, rp: RocketPool, lotIndex: number, options: SendOptions) {
 	// Load contracts
-	const rocketVault = await rp.contracts.get("rocketVault");
+	const rocketVault = await rp.contracts.get("poolseaVault");
 
 	// Calculation base value
 	const calcBase = web3.utils.toBN(web3.utils.toWei("1", "ether"));
@@ -39,7 +39,7 @@ export async function placeBid(web3: Web3, rp: RocketPool, lotIndex: number, opt
 			web3.eth.getBalance(bidderAddress).then((value: any) => web3.utils.toBN(value)),
 			web3.eth.getBalance(rocketVault.options.address).then((value: any) => web3.utils.toBN(value)),
 			rocketVault.methods
-				.balanceOf("rocketDepositPool")
+				.balanceOf("poolseaDepositPool")
 				.call()
 				.then((value: any) => web3.utils.toBN(value)),
 		]).then(([bidderEth, vaultEth, depositPoolEth]) => ({

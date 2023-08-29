@@ -31,7 +31,7 @@ class Minipool {
 	 * @returns a Promise<Contract\> with a web3.eth.contract instance of the rocketMinipoolManager contract
 	 */
 	private get rocketMinipoolManager(): Promise<Contract> {
-		return this.contracts.get("rocketMinipoolManager");
+		return this.contracts.get("poolseaMinipoolManager");
 	}
 
 	/**
@@ -39,7 +39,7 @@ class Minipool {
 	 * @returns a Promise<Contract\> with a web3.eth.contract instance of the rocketMinipoolQueue contract
 	 */
 	private get rocketMinipoolQueue(): Promise<Contract> {
-		return this.contracts.get("rocketMinipoolQueue");
+		return this.contracts.get("poolseaMinipoolQueue");
 	}
 
 	/**
@@ -47,7 +47,7 @@ class Minipool {
 	 * @returns a Promise<Contract\> with a web3.eth.contract instance of the rocketMinipoolStatus contract
 	 */
 	private get rocketMinipoolStatus(): Promise<Contract> {
-		return this.contracts.get("rocketMinipoolStatus");
+		return this.contracts.get("poolseaMinipoolStatus");
 	}
 
 	/**
@@ -55,7 +55,7 @@ class Minipool {
 	 * @returns a Promise<Contract\> with a web3.eth.contract instance of the rocketMinipool contract
 	 */
 	private get rocketMinipool(): Promise<Contract> {
-		return this.contracts.get("rocketMinipool");
+		return this.contracts.get("poolseaMinipool");
 	}
 
 	/**
@@ -477,7 +477,7 @@ class Minipool {
 	 * ```
 	 */
 	public getMinipoolContract(address: string): Promise<MinipoolContract> {
-		return this.contracts.make("rocketMinipoolDelegate", address).then((rocketMinipool: Contract): MinipoolContract => {
+		return this.contracts.make("poolseaMinipoolDelegate", address).then((rocketMinipool: Contract): MinipoolContract => {
 			return new MinipoolContract(this.web3, address, rocketMinipool);
 		});
 	}

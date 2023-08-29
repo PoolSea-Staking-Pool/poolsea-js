@@ -131,13 +131,13 @@ export default function runRewardsTests(web3: Web3, rp: RocketPool) {
 			] = await web3.eth.getAccounts();
 
 			// Disable RocketClaimNode claims contract
-			await setDAONetworkBootstrapRewardsClaimer(web3, rp, "rocketClaimNode", web3.utils.toWei("0", "ether"), {
+			await setDAONetworkBootstrapRewardsClaimer(web3, rp, "poolseaClaimNode", web3.utils.toWei("0", "ether"), {
 				from: owner,
 				gas: gasLimit,
 			});
 
 			// Set settings
-			await setDAONodeTrustedBootstrapSetting(web3, rp, "rocketDAONodeTrustedSettingsMinipool", "minipool.scrub.period", scrubPeriod, {
+			await setDAONodeTrustedBootstrapSetting(web3, rp, "poolseaDAONodeTrustedSettingsMinipool", "minipool.scrub.period", scrubPeriod, {
 				from: owner,
 				gas: gasLimit,
 			});
@@ -170,7 +170,7 @@ export default function runRewardsTests(web3: Web3, rp: RocketPool) {
 
 			// Set max per-minipool stake to 100% and RPL price to 1 ether
 			const block = await web3.eth.getBlockNumber();
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsNode", "node.per.minipool.stake.maximum", web3.utils.toWei("1", "ether"), {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsNode", "node.per.minipool.stake.maximum", web3.utils.toWei("1", "ether"), {
 				from: owner,
 				gas: gasLimit,
 			});
@@ -277,17 +277,17 @@ export default function runRewardsTests(web3: Web3, rp: RocketPool) {
 
 		it(printTitle("guardian", "set contract claimer percentage for rewards, then update it"), async () => {
 			// Set the amount this contract can claim
-			await setDAONetworkBootstrapRewardsClaimer(web3, rp, "rocketClaimDAO", web3.utils.toWei("0.0001", "ether"), {
+			await setDAONetworkBootstrapRewardsClaimer(web3, rp, "poolseaClaimDAO", web3.utils.toWei("0.0001", "ether"), {
 				from: owner,
 				gas: gasLimit,
 			});
 			// Set the amount this contract can claim, then update it
-			await setDAONetworkBootstrapRewardsClaimer(web3, rp, "rocketClaimNode", web3.utils.toWei("0.01", "ether"), {
+			await setDAONetworkBootstrapRewardsClaimer(web3, rp, "poolseaClaimNode", web3.utils.toWei("0.01", "ether"), {
 				from: owner,
 				gas: gasLimit,
 			});
 			// Update now
-			await setDAONetworkBootstrapRewardsClaimer(web3, rp, "rocketClaimNode", web3.utils.toWei("0.02", "ether"), {
+			await setDAONetworkBootstrapRewardsClaimer(web3, rp, "poolseaClaimNode", web3.utils.toWei("0.02", "ether"), {
 				from: owner,
 				gas: gasLimit,
 			});
@@ -304,7 +304,7 @@ export default function runRewardsTests(web3: Web3, rp: RocketPool) {
 				)
 			);
 			// Set the amount this contract can claim, then update it
-			await setDAONetworkBootstrapRewardsClaimer(web3, rp, "rocketClaimNode", web3.utils.toWei("0.01", "ether"), {
+			await setDAONetworkBootstrapRewardsClaimer(web3, rp, "poolseaClaimNode", web3.utils.toWei("0.01", "ether"), {
 				from: owner,
 				gas: gasLimit,
 			});
@@ -312,7 +312,7 @@ export default function runRewardsTests(web3: Web3, rp: RocketPool) {
 			await setDAONetworkBootstrapRewardsClaimer(
 				web3,
 				rp,
-				"rocketClaimNode",
+				"poolseaClaimNode",
 				web3.utils.toWei("0", "ether"),
 				{
 					from: owner,
@@ -338,7 +338,7 @@ export default function runRewardsTests(web3: Web3, rp: RocketPool) {
 			await setDAONetworkBootstrapRewardsClaimer(
 				web3,
 				rp,
-				"rocketClaimNode",
+				"poolseaClaimNode",
 				web3.utils.toWei(claimAmount.toString(), "ether"),
 				{
 					from: owner,
@@ -362,7 +362,7 @@ export default function runRewardsTests(web3: Web3, rp: RocketPool) {
 			const claimAmount = (1 - totalClaimersPerc + 0.001).toFixed(4);
 			// Set the amount this contract can claim and expect total claimers amount to equal 1 ether (100%)
 			await shouldRevert(
-				setDAONetworkBootstrapRewardsClaimer(web3, rp, "rocketClaimNode", web3.utils.toWei(claimAmount.toString(), "ether"), {
+				setDAONetworkBootstrapRewardsClaimer(web3, rp, "poolseaClaimNode", web3.utils.toWei(claimAmount.toString(), "ether"), {
 					from: owner,
 					gas: gasLimit,
 				}),
@@ -373,7 +373,7 @@ export default function runRewardsTests(web3: Web3, rp: RocketPool) {
 
 		it(printTitle("userOne", "fails to call claim method on rewards pool contract as they are not a registered claimer contract"), async () => {
 			// Init rewards pool
-			const rocketRewardsPool = await rp.contracts.get("rocketRewardsPool");
+			const rocketRewardsPool = await rp.contracts.get("poolseaRewardsPool");
 			// Try to call the claim method
 			await shouldRevert(
 				rocketRewardsPool.methods.claim(userOne, userOne, web3.utils.toWei("0.1")).send({
@@ -389,7 +389,7 @@ export default function runRewardsTests(web3: Web3, rp: RocketPool) {
 		it(printTitle("node", "can claim RPL"), async () => {
 			// Initialize RPL inflation & claims contract
 			const rplInflationStartTime = await rplInflationSetup();
-			await rewardsContractSetup("rocketClaimNode", 0.5);
+			await rewardsContractSetup("poolseaClaimNode", 0.5);
 
 			// Move to inflation start plus one claim interval
 			const currentTime = await getCurrentTime(web3);
@@ -422,7 +422,7 @@ export default function runRewardsTests(web3: Web3, rp: RocketPool) {
 
 		it(printTitle("node", "cannot claim RPL before inflation has begun"), async () => {
 			// Initialize claims contract
-			await rewardsContractSetup("rocketClaimNode", 0.5);
+			await rewardsContractSetup("poolseaClaimNode", 0.5);
 
 			// Attempt to claim RPL
 			await shouldRevert(
@@ -438,7 +438,7 @@ export default function runRewardsTests(web3: Web3, rp: RocketPool) {
 		it(printTitle("node", "cannot claim RPL while the node claim contract is disabled"), async () => {
 			// Initialize RPL inflation & claims contract
 			const rplInflationStartTime = await rplInflationSetup();
-			await rewardsContractSetup("rocketClaimNode", 0.5);
+			await rewardsContractSetup("poolseaClaimNode", 0.5);
 
 			// Move to inflation start plus one claim interval
 			const currentTime = await getCurrentTime(web3);
@@ -446,7 +446,7 @@ export default function runRewardsTests(web3: Web3, rp: RocketPool) {
 			await increaseTime(web3, rplInflationStartTime - currentTime + claimIntervalTime);
 
 			// Disable RocketClaimNode claims contract
-			await setDAONetworkBootstrapRewardsClaimer(web3, rp, "rocketClaimNode", web3.utils.toWei("0", "ether"), {
+			await setDAONetworkBootstrapRewardsClaimer(web3, rp, "poolseaClaimNode", web3.utils.toWei("0", "ether"), {
 				from: owner,
 				gas: gasLimit,
 			});
@@ -465,7 +465,7 @@ export default function runRewardsTests(web3: Web3, rp: RocketPool) {
 		it(printTitle("node", "cannot claim RPL twice in the same interval"), async () => {
 			// Initialize RPL inflation & claims contract
 			const rplInflationStartTime = await rplInflationSetup();
-			await rewardsContractSetup("rocketClaimNode", 0.5);
+			await rewardsContractSetup("poolseaClaimNode", 0.5);
 
 			// Move to inflation start plus one claim interval
 			const currentTime = await getCurrentTime(web3);
@@ -492,7 +492,7 @@ export default function runRewardsTests(web3: Web3, rp: RocketPool) {
 		it(printTitle("node", "cannot claim RPL while their node is undercollateralized"), async () => {
 			// Initialize RPL inflation & claims contract
 			const rplInflationStartTime = await rplInflationSetup();
-			await rewardsContractSetup("rocketClaimNode", 0.5);
+			await rewardsContractSetup("poolseaClaimNode", 0.5);
 
 			// Move to inflation start plus one claim interval
 			const currentTime = await getCurrentTime(web3);
@@ -534,7 +534,7 @@ export default function runRewardsTests(web3: Web3, rp: RocketPool) {
 			// Setup RPL inflation
 			const rplInflationStartTime = await rplInflationSetup();
 			// Init this claiming contract on the rewards pool
-			await rewardsContractSetup("rocketClaimTrustedNode", 0.5);
+			await rewardsContractSetup("poolseaClaimTrustedNode", 0.5);
 			// Current time
 			const currentTime = await getCurrentTime(web3);
 			// Can this trusted node claim before there is any inflation available?
@@ -554,7 +554,7 @@ export default function runRewardsTests(web3: Web3, rp: RocketPool) {
 			// Setup RPL inflation
 			const rplInflationStartTime = await rplInflationSetup();
 			// Init this claiming contract on the rewards pool
-			await rewardsContractSetup("rocketClaimTrustedNode", 0.1);
+			await rewardsContractSetup("poolseaClaimTrustedNode", 0.1);
 			// Current time
 			const currentTime = await getCurrentTime(web3);
 			// Can this trusted node claim before there is any inflation available?
@@ -581,7 +581,7 @@ export default function runRewardsTests(web3: Web3, rp: RocketPool) {
 			// Setup RPL inflation
 			const rplInflationStartTime = await rplInflationSetup();
 			// Init this claiming contract on the rewards pool
-			await rewardsContractSetup("rocketClaimTrustedNode", 0.15);
+			await rewardsContractSetup("poolseaClaimTrustedNode", 0.15);
 			// Current time
 			const currentTime = await getCurrentTime(web3);
 			// Can this trusted node claim before there is any inflation available?
@@ -605,7 +605,7 @@ export default function runRewardsTests(web3: Web3, rp: RocketPool) {
 			// Setup RPL inflation
 			const rplInflationStartTime = await rplInflationSetup();
 			// Init this claiming contract on the rewards pool
-			await rewardsContractSetup("rocketClaimTrustedNode", 0);
+			await rewardsContractSetup("poolseaClaimTrustedNode", 0);
 			// Current block
 			const currentTime = await getCurrentTime(web3);
 			// Can this trusted node claim before there is any inflation available?
@@ -629,7 +629,7 @@ export default function runRewardsTests(web3: Web3, rp: RocketPool) {
 				// Setup RPL inflation
 				const rplInflationStartTime = await rplInflationSetup();
 				// Init this claiming contract on the rewards pool
-				await rewardsContractSetup("rocketClaimTrustedNode", 0.0123);
+				await rewardsContractSetup("poolseaClaimTrustedNode", 0.0123);
 				// Current time
 				const currentTime = await getCurrentTime(web3);
 				// Can this trusted node claim before there is any inflation available?
@@ -664,7 +664,7 @@ export default function runRewardsTests(web3: Web3, rp: RocketPool) {
 				// Set the contracts perc it can claim 1 =100%
 				const claimPercOrig = 0.1;
 				// Init this claiming contract on the rewards pool
-				await rewardsContractSetup("rocketClaimTrustedNode", claimPercOrig);
+				await rewardsContractSetup("poolseaClaimTrustedNode", claimPercOrig);
 				// Current time
 				const currentTime = await getCurrentTime(web3);
 				// Can this trusted node claim before there is any inflation available?
@@ -679,7 +679,7 @@ export default function runRewardsTests(web3: Web3, rp: RocketPool) {
 				// Change inflation rate now, should only kick in on the next interval
 				const claimPercChange = 0.2;
 				// Update it
-				await rewardsContractSetup("rocketClaimTrustedNode", claimPercChange);
+				await rewardsContractSetup("poolseaClaimTrustedNode", claimPercChange);
 				// Make a claim now and pass it the expected contract claim percentage
 				await rewardsClaimTrustedNode(web3, rp, registeredNodeTrusted2, {
 					from: registeredNodeTrusted2,
@@ -707,7 +707,7 @@ export default function runRewardsTests(web3: Web3, rp: RocketPool) {
 				// Setup RPL inflation
 				const rplInflationStartTime = await rplInflationSetup();
 				// Init this claiming contract on the rewards pool
-				await rewardsContractSetup("rocketClaimTrustedNode", 0.1);
+				await rewardsContractSetup("poolseaClaimTrustedNode", 0.1);
 				// Current time
 				const currentTime = await getCurrentTime(web3);
 				// Can this trusted node claim before there is any inflation available?
@@ -746,7 +746,7 @@ export default function runRewardsTests(web3: Web3, rp: RocketPool) {
 				// Setup RPL inflation
 				const rplInflationStartTime = await rplInflationSetup();
 				// Init this claiming contract on the rewards pool
-				await rewardsContractSetup("rocketClaimTrustedNode", 0.1);
+				await rewardsContractSetup("poolseaClaimTrustedNode", 0.1);
 				// Current time
 				const currentTime = await getCurrentTime(web3);
 				// Can this trusted node claim before there is any inflation available?
@@ -779,7 +779,7 @@ export default function runRewardsTests(web3: Web3, rp: RocketPool) {
 			// Setup RPL inflation
 			const rplInflationStartTime = await rplInflationSetup();
 			// Init this claiming contract on the rewards pool
-			await rewardsContractSetup("rocketClaimTrustedNode", 0.1);
+			await rewardsContractSetup("poolseaClaimTrustedNode", 0.1);
 			// Current time
 			const currentTime = await getCurrentTime(web3);
 			// Can this trusted node claim before there is any inflation available?
@@ -792,13 +792,13 @@ export default function runRewardsTests(web3: Web3, rp: RocketPool) {
 				gas: gasLimit,
 			});
 			// Forward to next interval, set claim amount to 0, should kick in the interval after next
-			await rewardsContractSetup("rocketClaimDAO", 0);
+			await rewardsContractSetup("poolseaClaimDAO", 0);
 			// Make a claim now from another trusted node
 			await rewardsClaimDAO(web3, rp, {
 				from: registeredNodeTrusted2,
 				gas: gasLimit,
 			});
-			await rewardsContractSetup("rocketClaimTrustedNode", 0.2);
+			await rewardsContractSetup("poolseaClaimTrustedNode", 0.2);
 			// Next interval
 			await increaseTime(web3, claimIntervalTime);
 			// Make another claim, dao shouldn't receive anything
@@ -817,7 +817,7 @@ export default function runRewardsTests(web3: Web3, rp: RocketPool) {
 				// Setup RPL inflation
 				const rplInflationStartTime = await rplInflationSetup();
 				// Init this claiming contract on the rewards pool
-				await rewardsContractSetup("rocketClaimTrustedNode", 0.1);
+				await rewardsContractSetup("poolseaClaimTrustedNode", 0.1);
 				// Current time
 				const currentTime = await getCurrentTime(web3);
 				// Can this trusted node claim before there is any inflation available?

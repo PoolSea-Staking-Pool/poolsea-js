@@ -40,7 +40,7 @@ export default function runDAOProtocolTests(web3: Web3, rp: RocketPool) {
 		// Update a setting
 		it(printTitle("userOne", "fails to update a setting as they are not the guardian"), async () => {
 			await shouldRevert(
-				setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsAuction", "auction.lot.create.enabled", true, {
+				setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsAuction", "auction.lot.create.enabled", true, {
 					from: userOne,
 					gas: gasLimit,
 				}),
@@ -56,7 +56,7 @@ export default function runDAOProtocolTests(web3: Web3, rp: RocketPool) {
 				setDAOProtocolBootstrapSettingMulti(
 					web3,
 					rp,
-					["rocketDAOProtocolSettingsAuction", "rocketDAOProtocolSettingsDeposit", "rocketDAOProtocolSettingsInflation"],
+					["poolseaDAOProtocolSettingsAuction", "poolseaDAOProtocolSettingsDeposit", "poolseaDAOProtocolSettingsInflation"],
 					["auction.lot.create.enabled", "deposit.minimum", "rpl.inflation.interval.blocks"],
 					[true, web3.utils.toWei("2"), 400],
 					{
@@ -71,31 +71,31 @@ export default function runDAOProtocolTests(web3: Web3, rp: RocketPool) {
 
 		// Verify each setting contract is enabled correctly. These settings are tested in greater detail in the relevant contracts
 		it(printTitle("guardian", "updates a setting in each settings contract while bootstrap mode is enabled"), async () => {
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsAuction", "auction.lot.create.enabled", true, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsAuction", "auction.lot.create.enabled", true, {
 				from: guardian,
 				gas: gasLimit,
 			});
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsDeposit", "deposit.minimum", web3.utils.toWei("2"), {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsDeposit", "deposit.minimum", web3.utils.toWei("2"), {
 				from: guardian,
 				gas: gasLimit,
 			});
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsInflation", "rpl.inflation.interval.blocks", 400, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsInflation", "rpl.inflation.interval.blocks", 400, {
 				from: guardian,
 				gas: gasLimit,
 			});
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsMinipool", "minipool.submit.withdrawable.enabled", true, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsMinipool", "minipool.submit.withdrawable.enabled", true, {
 				from: guardian,
 				gas: gasLimit,
 			});
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsNetwork", "network.submit.prices.enabled", true, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsNetwork", "network.submit.prices.enabled", true, {
 				from: guardian,
 				gas: gasLimit,
 			});
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsRewards", "rpl.rewards.claim.period.blocks", 100, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsRewards", "rpl.rewards.claim.period.blocks", 100, {
 				from: guardian,
 				gas: gasLimit,
 			});
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsInflation", "network.reth.deposit.delay", 500, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsInflation", "network.reth.deposit.delay", 500, {
 				from: guardian,
 				gas: gasLimit,
 			});
@@ -107,7 +107,7 @@ export default function runDAOProtocolTests(web3: Web3, rp: RocketPool) {
 			await setDAOProtocolBootstrapSettingMulti(
 				web3,
 				rp,
-				["rocketDAOProtocolSettingsAuction", "rocketDAOProtocolSettingsDeposit", "rocketDAOProtocolSettingsInflation"],
+				["poolseaDAOProtocolSettingsAuction", "poolseaDAOProtocolSettingsDeposit", "poolseaDAOProtocolSettingsInflation"],
 				["auction.lot.create.enabled", "deposit.minimum", "rpl.inflation.interval.blocks"],
 				[true, web3.utils.toWei("2"), 400],
 				{
@@ -120,7 +120,7 @@ export default function runDAOProtocolTests(web3: Web3, rp: RocketPool) {
 		// Update a setting, then try again
 		it(printTitle("guardian", "updates a setting, then fails to update a setting again after bootstrap mode is disabled"), async () => {
 			// Set via bootstrapping
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsAuction", "auction.lot.create.enabled", true, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsAuction", "auction.lot.create.enabled", true, {
 				from: guardian,
 				gas: gasLimit,
 			});
@@ -131,7 +131,7 @@ export default function runDAOProtocolTests(web3: Web3, rp: RocketPool) {
 			});
 			// Attempt to change a setting again
 			await shouldRevert(
-				setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsAuction", "auction.lot.create.enabled", true, {
+				setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsAuction", "auction.lot.create.enabled", true, {
 					from: guardian,
 					gas: gasLimit,
 				}),
@@ -146,7 +146,7 @@ export default function runDAOProtocolTests(web3: Web3, rp: RocketPool) {
 			await setDAOProtocolBootstrapSettingMulti(
 				web3,
 				rp,
-				["rocketDAOProtocolSettingsAuction", "rocketDAOProtocolSettingsDeposit", "rocketDAOProtocolSettingsInflation"],
+				["poolseaDAOProtocolSettingsAuction", "poolseaDAOProtocolSettingsDeposit", "poolseaDAOProtocolSettingsInflation"],
 				["auction.lot.create.enabled", "deposit.minimum", "rpl.inflation.interval.blocks"],
 				[true, web3.utils.toWei("2"), 400],
 				{
@@ -164,7 +164,7 @@ export default function runDAOProtocolTests(web3: Web3, rp: RocketPool) {
 				setDAOProtocolBootstrapSettingMulti(
 					web3,
 					rp,
-					["rocketDAOProtocolSettingsAuction", "rocketDAOProtocolSettingsDeposit", "rocketDAOProtocolSettingsInflation"],
+					["poolseaDAOProtocolSettingsAuction", "poolseaDAOProtocolSettingsDeposit", "poolseaDAOProtocolSettingsInflation"],
 					["auction.lot.create.enabled", "deposit.minimum", "rpl.inflation.interval.blocks"],
 					[true, web3.utils.toWei("2"), 400],
 					{

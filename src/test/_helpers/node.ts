@@ -15,14 +15,14 @@ export async function getNodeRPLStake(web3: Web3, rp: RocketPool, nodeAddress: s
 
 export async function setNodeTrusted(web3: Web3, rp: RocketPool, _account: string, id: string, url: string, owner: string) {
 	// Get the DAO settings
-	const daoNodeSettings = await rp.contracts.get("rocketDAONodeTrustedSettingsMembers");
+	const daoNodeSettings = await rp.contracts.get("poolseaDAONodeTrustedSettingsMembers");
 	// How much RPL is required for a trusted node bond?
 	const rplBondAmount = web3.utils.fromWei(await daoNodeSettings.methods.getRPLBond().call());
 	// Mint RPL bond required for them to join
 	await mintRPL(web3, rp, _account, rplBondAmount, owner);
 	// Set allowance for the Vault to grab the bond
-	const rocketTokenRPL = await rp.contracts.get("rocketTokenRPL");
-	const rocketDAONodeTrustedActions = await rp.contracts.get("rocketDAONodeTrustedActions");
+	const rocketTokenRPL = await rp.contracts.get("poolseaTokenRPL");
+	const rocketDAONodeTrustedActions = await rp.contracts.get("poolseaDAONodeTrustedActions");
 	const _amount = web3.utils.toWei(rplBondAmount.toString(), "ether");
 	await rocketTokenRPL.methods.approve(rocketDAONodeTrustedActions.options.address, _amount).send({ from: _account });
 	// Create invites for them to become a member
@@ -64,7 +64,7 @@ export async function setNodeWithdrawalAddress(web3: Web3, rp: RocketPool, nodeA
 
 // Submit a node RPL stake
 export async function nodeStakeRPL(web3: Web3, rp: RocketPool, amount: string, options: SendOptions) {
-	const rocketNodeStaking = await rp.contracts.get("rocketNodeStaking");
+	const rocketNodeStaking = await rp.contracts.get("poolseaNodeStaking");
 
 	options.gasPrice = web3.utils.toBN(web3.utils.toWei("20", "gwei")).toString();
 	options.gas = 1000000;
@@ -85,8 +85,8 @@ export async function nodeWithdrawRPL(web3: Web3, rp: RocketPool, amount: string
 let minipoolSalt = 0;
 export async function nodeDeposit(web3: Web3, rp: RocketPool, options: SendOptions) {
 	// Get contract addresses
-	const rocketMinipoolManager = await rp.contracts.get("rocketMinipoolManager");
-	const rocketStorage = await rp.contracts.get("rocketStorage");
+	const rocketMinipoolManager = await rp.contracts.get("poolseaMinipoolManager");
+	const rocketStorage = await rp.contracts.get("poolseaStorage");
 
 	// Get artifact and bytecode
 	const rocketMinipool = require("../../contracts/RocketMinipool.json");

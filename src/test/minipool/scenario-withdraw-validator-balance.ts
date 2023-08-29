@@ -19,8 +19,8 @@ export async function withdrawValidatorBalance(
 	let _withdrawalBalance = web3.utils.toBN(withdrawalBalance);
 
 	// Load contracts
-	const rocketTokenRETH = await rp.contracts.get("rocketTokenRETH");
-	const rocketMinipoolPenalty = await rp.contracts.get("rocketMinipoolPenalty");
+	const rocketTokenRETH = await rp.contracts.get("poolseaTokenRETH");
+	const rocketMinipoolPenalty = await rp.contracts.get("poolseaMinipoolPenalty");
 
 	// Get node parameters
 	const nodeAddress = await minipool.getNodeAddress();

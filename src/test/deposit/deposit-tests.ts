@@ -100,7 +100,7 @@ export default function runDepositTests(web3: Web3, rp: RocketPool) {
 
 		it(printTitle("staker", "cannot make a deposit while deposits are disabled"), async () => {
 			// Disable deposits
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsDeposit", "deposit.enabled", false, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsDeposit", "deposit.enabled", false, {
 				from: owner,
 			});
 
@@ -136,7 +136,7 @@ export default function runDepositTests(web3: Web3, rp: RocketPool) {
 
 		it(printTitle("staker", "cannot make a deposit which would exceed the maximum deposit pool size"), async () => {
 			// Set max deposit pool size
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsDeposit", "deposit.pool.maximum", web3.utils.toWei("100", "ether"), {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsDeposit", "deposit.pool.maximum", web3.utils.toWei("100", "ether"), {
 				from: owner,
 			});
 
@@ -163,9 +163,9 @@ export default function runDepositTests(web3: Web3, rp: RocketPool) {
 			});
 
 			// Disable deposit assignment
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsDeposit", "deposit.assign.enabled", false, { from: owner });
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsDeposit", "deposit.assign.enabled", false, { from: owner });
 			// Disable minimum unbonded commission threshold
-			await setDAONodeTrustedBootstrapSetting(web3, rp, "rocketDAONodeTrustedSettingsMembers", "members.minipool.unbonded.min.fee", "0", {
+			await setDAONodeTrustedBootstrapSetting(web3, rp, "poolseaDAONodeTrustedSettingsMembers", "members.minipool.unbonded.min.fee", "0", {
 				from: owner,
 			});
 
@@ -201,11 +201,11 @@ export default function runDepositTests(web3: Web3, rp: RocketPool) {
 			});
 
 			// Re-enable deposit assignment & set limit
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsDeposit", "deposit.assign.enabled", true, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsDeposit", "deposit.assign.enabled", true, {
 				from: owner,
 				gas: gasLimit,
 			});
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsDeposit", "deposit.assign.maximum", 3, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsDeposit", "deposit.assign.maximum", 3, {
 				from: owner,
 				gas: gasLimit,
 			});
@@ -219,7 +219,7 @@ export default function runDepositTests(web3: Web3, rp: RocketPool) {
 
 		it(printTitle("random address", "cannot assign deposits while deposit assignment is disabled"), async () => {
 			// Disable deposit assignment
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsDeposit", "deposit.assign.enabled", false, { from: owner });
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsDeposit", "deposit.assign.enabled", false, { from: owner });
 
 			// Attempt to assign deposits
 			await shouldRevert(

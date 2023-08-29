@@ -161,19 +161,19 @@ export default function runMinipoolStatusTests(web3: Web3, rp: RocketPool) {
 			assert(stakingStatus3.eq(web3.utils.toBN(2)), "Incorrect staking minipool status");
 
 			// Set a small proposal cooldown
-			await setDAONodeTrustedBootstrapSetting(web3, rp, "rocketDAONodeTrustedSettingsProposals", "proposal.cooldown", proposalCooldown, {
+			await setDAONodeTrustedBootstrapSetting(web3, rp, "poolseaDAONodeTrustedSettingsProposals", "proposal.cooldown", proposalCooldown, {
 				from: owner,
 				gas: gasLimit,
 			});
-			await setDAONodeTrustedBootstrapSetting(web3, rp, "rocketDAONodeTrustedSettingsProposals", "proposal.vote.blocks", proposalVoteBlocks, {
+			await setDAONodeTrustedBootstrapSetting(web3, rp, "poolseaDAONodeTrustedSettingsProposals", "proposal.vote.blocks", proposalVoteBlocks, {
 				from: owner,
 				gas: gasLimit,
 			});
-			await setDAONodeTrustedBootstrapSetting(web3, rp, "rocketDAONodeTrustedSettingsMinipool", "minipool.scrub.period", scrubPeriod, {
+			await setDAONodeTrustedBootstrapSetting(web3, rp, "poolseaDAONodeTrustedSettingsMinipool", "minipool.scrub.period", scrubPeriod, {
 				from: owner,
 				gas: gasLimit,
 			});
-			await setDAONodeTrustedBootstrapSetting(web3, rp, "rocketDAONodeTrustedSettingsProposals", "proposal.vote.delay.blocks", proposalVoteDelayBlocks, {
+			await setDAONodeTrustedBootstrapSetting(web3, rp, "poolseaDAONodeTrustedSettingsProposals", "proposal.vote.delay.blocks", proposalVoteDelayBlocks, {
 				from: owner,
 				gas: gasLimit,
 			});
@@ -278,7 +278,7 @@ export default function runMinipoolStatusTests(web3: Web3, rp: RocketPool) {
 			const endBalance = web3.utils.toWei("36", "ether");
 
 			// Disable submissions
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsMinipool", "minipool.submit.withdrawable.enabled", false, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsMinipool", "minipool.submit.withdrawable.enabled", false, {
 				from: owner,
 			});
 

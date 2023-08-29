@@ -6,14 +6,14 @@ import RocketPool from "../../rocketpool/rocketpool";
 // Get the current rewards claim period in blocks
 export async function rewardsClaimIntervalTimeGet(web3: Web3, rp: RocketPool, options: SendOptions) {
 	// Load contracts
-	const rocketDAOProtocolSettingsRewards = await rp.contracts.get("rocketDAOProtocolSettingsRewards");
+	const rocketDAOProtocolSettingsRewards = await rp.contracts.get("poolseaDAOProtocolSettingsRewards");
 	return await rocketDAOProtocolSettingsRewards.methods.getClaimIntervalTime().call();
 }
 
 // Get the current rewards claimers total
 export async function rewardsClaimersPercTotalGet(web3: Web3, rp: RocketPool, options: SendOptions) {
 	// Load contracts
-	const rocketDAOProtocolSettingsRewards = await rp.contracts.get("rocketDAOProtocolSettingsRewards");
+	const rocketDAOProtocolSettingsRewards = await rp.contracts.get("poolseaDAOProtocolSettingsRewards");
 	return await rocketDAOProtocolSettingsRewards.methods.getRewardsClaimersPercTotal().call();
 }
 

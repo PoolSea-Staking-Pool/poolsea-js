@@ -97,17 +97,17 @@ export default function runMinipoolTests(web3: Web3, rp: RocketPool) {
 			await setNodeTrusted(web3, rp, trustedNode, "saas_1", "node@home.com", owner);
 
 			// Set settings
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsMinipool", "minipool.launch.timeout", launchTimeout, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsMinipool", "minipool.launch.timeout", launchTimeout, {
 				from: owner,
 				gas: gasLimit,
 			});
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsMinipool", "minipool.withdrawal.delay", withdrawalDelay, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsMinipool", "minipool.withdrawal.delay", withdrawalDelay, {
 				from: owner,
 				gas: gasLimit,
 			});
 
 			// Set rETH collateralisation target to a value high enough it won't cause excess ETH to be funneled back into deposit pool and mess with our calcs
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsNetwork", "network.reth.collateral.target", web3.utils.toWei("50", "ether"), {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsNetwork", "network.reth.collateral.target", web3.utils.toWei("50", "ether"), {
 				from: owner,
 				gas: gasLimit,
 			});
@@ -209,7 +209,7 @@ export default function runMinipoolTests(web3: Web3, rp: RocketPool) {
 			assert(prelaunch2RefundBalance.eq(web3.utils.toBN(0)), "Incorrect prelaunch minipool refund balance");
 
 			// Check minipool queues
-			const rocketMinipoolQueue = await rp.contracts.get("rocketMinipoolQueue");
+			const rocketMinipoolQueue = await rp.contracts.get("poolseaMinipoolQueue");
 			const [totalLength, fullLength, halfLength, emptyLength] = await Promise.all([
 				rocketMinipoolQueue.methods
 					.getTotalLength()
@@ -238,13 +238,13 @@ export default function runMinipoolTests(web3: Web3, rp: RocketPool) {
 
 		async function upgradeNetworkDelegateContract() {
 			// Upgrade the delegate contract
-			await setDaoNodeTrustedBootstrapUpgrade(web3, rp, "upgradeContract", "rocketMinipoolDelegate", [], newDelegateAddress, {
+			await setDaoNodeTrustedBootstrapUpgrade(web3, rp, "upgradeContract", "poolseaMinipoolDelegate", [], newDelegateAddress, {
 				from: owner,
 				gas: gasLimit,
 			});
 
 			// Check effective delegate is still the original
-			const minipoolABI = await rp.contracts.abi("rocketMinipool");
+			const minipoolABI = await rp.contracts.abi("poolseaMinipool");
 			const minipool = new web3.eth.Contract(minipoolABI, stakingMinipool.address);
 			const effectiveDelegate = await minipool.methods.getEffectiveDelegate().call();
 			assert(effectiveDelegate !== newDelegateAddress, "Effective delegate was updated");
@@ -294,7 +294,7 @@ export default function runMinipoolTests(web3: Web3, rp: RocketPool) {
 			// Retrieve the current number of minipools
 			const minipoolCount = await rp.minipool.getMinipoolCount();
 			// Set max to the current number
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsMinipool", "minipool.maximum.count", minipoolCount, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsMinipool", "minipool.maximum.count", minipoolCount, {
 				from: owner,
 				gas: gasLimit,
 			});
@@ -332,7 +332,7 @@ export default function runMinipoolTests(web3: Web3, rp: RocketPool) {
 		it(printTitle("node operator", "cannot delegatecall to a delgate address that is a non-contract"), async () => {
 			// Creating minipool should fail now
 			const newMinipool = (await createMinipool(web3, rp, { from: node, value: web3.utils.toWei("32", "ether"), gas: gasLimit })) as MinipoolContract;
-			const minipoolABI = await rp.contracts.abi("rocketMinipool");
+			const minipoolABI = await rp.contracts.abi("poolseaMinipool");
 			const newMinipoolBase = new web3.eth.Contract(minipoolABI, newMinipool.address);
 			// Upgrade network delegate contract to random address
 			await upgradeNetworkDelegateContract();
@@ -479,10 +479,10 @@ export default function runMinipoolTests(web3: Web3, rp: RocketPool) {
 			await prelaunchMinipool.slash({ from: random, gas: gasLimit });
 
 			// Auction house should now have slashed 8 ETH worth of RPL (which is 800 RPL at starting price)
-			const rocketVault = await rp.contracts.get("rocketVault");
-			const rocketTokenRPL = await rp.contracts.get("rocketTokenRPL");
+			const rocketVault = await rp.contracts.get("poolseaVault");
+			const rocketTokenRPL = await rp.contracts.get("poolseaTokenRPL");
 			const balance = await rocketVault.methods
-				.balanceOfToken("rocketAuctionManager", rocketTokenRPL.options.address)
+				.balanceOfToken("poolseaAuctionManager", rocketTokenRPL.options.address)
 				.call()
 				.then((value: any) => web3.utils.toBN(value));
 			assert(balance.eq(web3.utils.toBN(web3.utils.toWei("800", "ether"))));
@@ -503,10 +503,10 @@ export default function runMinipoolTests(web3: Web3, rp: RocketPool) {
 			await withdrawValidatorBalance(web3, rp, prelaunchMinipool, web3.utils.toWei("8", "ether"), nodeWithdrawalAddress, true);
 
 			// Auction house should now have slashed 8 ETH worth of RPL (which is 800 RPL at starting price)
-			const rocketVault = await rp.contracts.get("rocketVault");
-			const rocketTokenRPL = await rp.contracts.get("rocketTokenRPL");
+			const rocketVault = await rp.contracts.get("poolseaVault");
+			const rocketTokenRPL = await rp.contracts.get("poolseaTokenRPL");
 			const balance = await rocketVault.methods
-				.balanceOfToken("rocketAuctionManager", rocketTokenRPL.options.address)
+				.balanceOfToken("poolseaAuctionManager", rocketTokenRPL.options.address)
 				.call()
 				.then((value: any) => web3.utils.toBN(value));
 			assert(balance.eq(web3.utils.toBN(web3.utils.toWei("800", "ether"))));
@@ -848,7 +848,7 @@ export default function runMinipoolTests(web3: Web3, rp: RocketPool) {
 		it(printTitle("node operator", "can upgrade and rollback their delegate contract"), async () => {
 			await upgradeNetworkDelegateContract();
 			// Get contract
-			const minipoolABI = await rp.contracts.abi("rocketMinipool");
+			const minipoolABI = await rp.contracts.abi("poolseaMinipool");
 			const minipool = new web3.eth.Contract(minipoolABI, stakingMinipool.address);
 			// Store original delegate
 			const originalDelegate = await minipool.methods.getEffectiveDelegate().call();
@@ -869,7 +869,7 @@ export default function runMinipoolTests(web3: Web3, rp: RocketPool) {
 		it(printTitle("node operator", "can use latest delegate contract"), async () => {
 			await upgradeNetworkDelegateContract();
 			// Get contract
-			const minipoolABI = await rp.contracts.abi("rocketMinipool");
+			const minipoolABI = await rp.contracts.abi("poolseaMinipool");
 			const minipool = new web3.eth.Contract(minipoolABI, stakingMinipool.address);
 			// Store original delegate
 			const originalDelegate = await minipool.methods.getEffectiveDelegate().call();
@@ -884,7 +884,7 @@ export default function runMinipoolTests(web3: Web3, rp: RocketPool) {
 			assert(currentDelegate === originalDelegate, "Current delegate was updated");
 			// Upgrade the delegate contract again
 			newDelegateAddress = "0x0000000000000000000000000000000000000002";
-			await setDaoNodeTrustedBootstrapUpgrade(web3, rp, "upgradeContract", "rocketMinipoolDelegate", [], newDelegateAddress, {
+			await setDaoNodeTrustedBootstrapUpgrade(web3, rp, "upgradeContract", "poolseaMinipoolDelegate", [], newDelegateAddress, {
 				from: owner,
 				gas: gasLimit,
 			});
@@ -896,7 +896,7 @@ export default function runMinipoolTests(web3: Web3, rp: RocketPool) {
 		it(printTitle("random", "cannot upgrade, rollback or set use latest delegate contract"), async () => {
 			await upgradeNetworkDelegateContract();
 			// Get contract
-			const minipoolABI = await rp.contracts.abi("rocketMinipool");
+			const minipoolABI = await rp.contracts.abi("poolseaMinipool");
 			const minipool = new web3.eth.Contract(minipoolABI, stakingMinipool.address);
 			// Call upgrade delegate from random
 			await shouldRevert(

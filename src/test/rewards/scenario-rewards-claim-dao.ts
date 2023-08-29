@@ -7,7 +7,7 @@ import RocketPool from "../../rocketpool/rocketpool";
 // Set the address the DAO can receive rewards at
 export async function getRewardsDAOTreasuryBalance(web3: Web3, rp: RocketPool, options: SendOptions) {
 	const rocketTokenRPLAddress = await rp.tokens.rpl.getAddress();
-	return rp.vault.balanceOfToken("rocketClaimDAO", rocketTokenRPLAddress);
+	return rp.vault.balanceOfToken("poolseaClaimDAO", rocketTokenRPLAddress);
 }
 
 // Set the address the DAO can receive rewards at
@@ -26,11 +26,11 @@ export async function rewardsClaimDAO(web3: Web3, rp: RocketPool, options: SendO
 			rp.rewards.pool.getClaimIntervalsPassed().then((value: any) => web3.utils.toBN(value)),
 			rp.rewards.pool.getClaimIntervalTimeStart().then((value: any) => web3.utils.toBN(value)),
 			rp.rewards.pool.getRPLBalance().then((value: any) => web3.utils.toBN(value)),
-			rp.rewards.pool.getClaimingContractPerc("rocketClaimDAO").then((value: any) => web3.utils.toBN(value)),
-			rp.rewards.pool.getClaimingContractAllowance("rocketClaimDAO").then((value: any) => web3.utils.toBN(value)),
-			rp.rewards.pool.getClaimingContractTotalClaimed("rocketClaimDAO").then((value: any) => web3.utils.toBN(value)),
+			rp.rewards.pool.getClaimingContractPerc("poolseaClaimDAO").then((value: any) => web3.utils.toBN(value)),
+			rp.rewards.pool.getClaimingContractAllowance("poolseaClaimDAO").then((value: any) => web3.utils.toBN(value)),
+			rp.rewards.pool.getClaimingContractTotalClaimed("poolseaClaimDAO").then((value: any) => web3.utils.toBN(value)),
 			rp.rewards.pool.getClaimIntervalRewardsTotal().then((value: any) => web3.utils.toBN(value)),
-			rp.vault.balanceOfToken("rocketClaimDAO", rocketTokenRPLAddress).then((value: any) => web3.utils.toBN(value)),
+			rp.vault.balanceOfToken("poolseaClaimDAO", rocketTokenRPLAddress).then((value: any) => web3.utils.toBN(value)),
 		]).then(
 			([
 				intervalsPassed,

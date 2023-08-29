@@ -53,7 +53,7 @@ export default function runRPLTests(web3: Web3, rp: RocketPool) {
 
 		it(printTitle("userOne", "burn all their current fixed supply RPL for new RPL"), async () => {
 			// Load contracts
-			const rocketTokenRPL = await rp.contracts.get("rocketTokenRPL");
+			const rocketTokenRPL = await rp.contracts.get("poolseaTokenRPL");
 			// Give allowance for all to be sent
 			await allowDummyRPL(web3, rp, rocketTokenRPL.options.address, userOneRPLBalance.toString(), {
 				from: userOne,
@@ -68,7 +68,7 @@ export default function runRPLTests(web3: Web3, rp: RocketPool) {
 
 		it(printTitle("userOne", "burn less fixed supply RPL than they've given an allowance for"), async () => {
 			// Load contracts
-			const rocketTokenRPL = await rp.contracts.get("rocketTokenRPL");
+			const rocketTokenRPL = await rp.contracts.get("poolseaTokenRPL");
 			// The allowance
 			const allowance = userOneRPLBalance.div(web3.utils.toBN(2));
 			// Give allowance for half to be spent
@@ -88,7 +88,7 @@ export default function runRPLTests(web3: Web3, rp: RocketPool) {
 
 		it(printTitle("userOne", "fails to burn more fixed supply RPL than they've given an allowance for"), async () => {
 			// Load contracts
-			const rocketTokenRPL = await rp.contracts.get("rocketTokenRPL");
+			const rocketTokenRPL = await rp.contracts.get("poolseaTokenRPL");
 			// The allowance
 			const allowance = userOneRPLBalance.sub(web3.utils.toBN(web3.utils.toWei("0.000001", "ether"))).toString();
 			// Give allowance for all to be sent
@@ -109,7 +109,7 @@ export default function runRPLTests(web3: Web3, rp: RocketPool) {
 
 		it(printTitle("userOne", "fails to burn more fixed supply RPL than they have"), async () => {
 			// Load contracts
-			const rocketTokenRPL = await rp.contracts.get("rocketTokenRPL");
+			const rocketTokenRPL = await rp.contracts.get("poolseaTokenRPL");
 			// The allowance
 			const allowance = userOneRPLBalance;
 			// Give allowance for all to be sent

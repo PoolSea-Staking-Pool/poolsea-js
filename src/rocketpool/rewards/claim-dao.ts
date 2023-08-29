@@ -23,7 +23,7 @@ class Rewards {
 	 * @returns a Promise<Contract\> with a web3.eth.contract instance of the rocketClaimDAO contract
 	 */
 	private get rocketClaimDAO(): Promise<Contract> {
-		return this.contracts.get("rocketClaimDAO");
+		return this.contracts.get("poolseaClaimDAO");
 	}
 }
 

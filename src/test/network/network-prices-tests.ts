@@ -76,15 +76,15 @@ export default function runNetworkPricesTests(web3: Web3, rp: RocketPool) {
 			await setNodeTrusted(web3, rp, trustedNode3, "saas_3", "node@home.com", owner);
 
 			// Set a small proposal cooldown
-			await setDAONodeTrustedBootstrapSetting(web3, rp, "rocketDAONodeTrustedSettingsProposals", "proposal.cooldown", proposalCooldown, {
+			await setDAONodeTrustedBootstrapSetting(web3, rp, "poolseaDAONodeTrustedSettingsProposals", "proposal.cooldown", proposalCooldown, {
 				from: owner,
 				gas: gasLimit,
 			});
-			await setDAONodeTrustedBootstrapSetting(web3, rp, "rocketDAONodeTrustedSettingsProposals", "proposal.vote.blocks", proposalVoteTime, {
+			await setDAONodeTrustedBootstrapSetting(web3, rp, "poolseaDAONodeTrustedSettingsProposals", "proposal.vote.blocks", proposalVoteTime, {
 				from: owner,
 				gas: gasLimit,
 			});
-			await setDAONodeTrustedBootstrapSetting(web3, rp, "rocketDAONodeTrustedSettingsProposals", "proposal.vote.delay.blocks", proposalVoteDelayBlocks, {
+			await setDAONodeTrustedBootstrapSetting(web3, rp, "poolseaDAONodeTrustedSettingsProposals", "proposal.vote.delay.blocks", proposalVoteDelayBlocks, {
 				from: owner,
 				gas: gasLimit,
 			});
@@ -186,7 +186,7 @@ export default function runNetworkPricesTests(web3: Web3, rp: RocketPool) {
 			const rplPrice = web3.utils.toWei("0.02", "ether");
 
 			// Disable submissions
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsNetwork", "network.submit.prices.enabled", false, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsNetwork", "network.submit.prices.enabled", false, {
 				from: owner,
 				gas: gasLimit,
 			});
@@ -349,7 +349,7 @@ export default function runNetworkPricesTests(web3: Web3, rp: RocketPool) {
 			// Mint some RPL so we can stake
 			await mintRPL(web3, rp, owner, trustedNode1, web3.utils.toWei("10000", "ether"));
 			// Set update frequency to 5000
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsNetwork", "network.submit.prices.frequency", 500, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsNetwork", "network.submit.prices.frequency", 500, {
 				from: owner,
 				gas: gasLimit,
 			});
@@ -384,7 +384,7 @@ export default function runNetworkPricesTests(web3: Web3, rp: RocketPool) {
 			// Updating on-chain effective stake should not change the latest reportable block (should still be 500)
 			assert(latest1.eq(latest2), "Latest reportable block changed");
 			// Change the update frequency to 300
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsNetwork", "network.submit.prices.frequency", 300, {
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsNetwork", "network.submit.prices.frequency", 300, {
 				from: owner,
 				gas: gasLimit,
 			});

@@ -20,7 +20,7 @@ class AuctionSettings {
 	 * @returns a Promise<Contract\> with a web3.eth.contract instance of the rocketDAOProtocolSettingsAuction contract
 	 */
 	private get rocketDAOProtocolSettingsAuction(): Promise<Contract> {
-		return this.contracts.get("rocketDAOProtocolSettingsAuction");
+		return this.contracts.get("poolseaDAOProtocolSettingsAuction");
 	}
 
 	/**

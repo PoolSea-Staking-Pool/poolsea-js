@@ -13,7 +13,7 @@ export async function rewardsClaimTrustedNodePossibleGet(web3: Web3, rp: RocketP
 // Get the current rewards claim period in seconds
 export async function rewardsClaimTrustedNodeRegisteredTimeGet(web3: Web3, rp: RocketPool, trustedNodeAddress: string, options: SendOptions) {
 	// Load contracts
-	const rocketClaimTrustedNode = await rp.contracts.get("rocketClaimTrustedNode");
+	const rocketClaimTrustedNode = await rp.contracts.get("poolseaClaimTrustedNode");
 	// Do it
 	return await rp.rewards.pool.getClaimContractRegisteredTime(rocketClaimTrustedNode.options.address, trustedNodeAddress);
 }
@@ -25,11 +25,11 @@ export async function rewardsClaimTrustedNode(web3: Web3, rp: RocketPool, truste
 		return Promise.all([
 			getCurrentTime(web3),
 			rp.rewards.pool.getClaimIntervalTimeStart().then((value: any) => web3.utils.toBN(value)),
-			rp.rewards.pool.getClaimingContractAllowance("rocketClaimTrustedNode").then((value: any) => web3.utils.toBN(value)),
-			rp.rewards.pool.getClaimingContractTotalClaimed("rocketClaimTrustedNode").then((value: any) => web3.utils.toBN(value)),
-			rp.rewards.pool.getClaimingContractPerc("rocketClaimTrustedNode").then((value: any) => web3.utils.toBN(value)),
+			rp.rewards.pool.getClaimingContractAllowance("poolseaClaimTrustedNode").then((value: any) => web3.utils.toBN(value)),
+			rp.rewards.pool.getClaimingContractTotalClaimed("poolseaClaimTrustedNode").then((value: any) => web3.utils.toBN(value)),
+			rp.rewards.pool.getClaimingContractPerc("poolseaClaimTrustedNode").then((value: any) => web3.utils.toBN(value)),
 			rp.rewards.claimTrustedNode.getClaimRewardsAmount(options.from).then((value: any) => web3.utils.toBN(value)),
-			rp.rewards.pool.getClaimingContractUserTotalCurrent("rocketClaimTrustedNode").then((value: any) => web3.utils.toBN(value)),
+			rp.rewards.pool.getClaimingContractUserTotalCurrent("poolseaClaimTrustedNode").then((value: any) => web3.utils.toBN(value)),
 		]).then(
 			([
 				currentTime,

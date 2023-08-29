@@ -74,16 +74,16 @@ export default function runNetworkBalancesTests(web3: Web3, rp: RocketPool) {
 			await setNodeTrusted(web3, rp, trustedNode3, "saas_3", "node@home.com", owner);
 
 			// Set a small proposal cooldown
-			await setDAONodeTrustedBootstrapSetting(web3, rp, "rocketDAONodeTrustedSettingsProposals", "proposal.cooldown", proposalCooldown, {
+			await setDAONodeTrustedBootstrapSetting(web3, rp, "poolseaDAONodeTrustedSettingsProposals", "proposal.cooldown", proposalCooldown, {
 				from: owner,
 				gas: gasLimit,
 			});
-			await setDAONodeTrustedBootstrapSetting(web3, rp, "rocketDAONodeTrustedSettingsProposals", "proposal.vote.blocks", proposalVoteBlocks, {
+			await setDAONodeTrustedBootstrapSetting(web3, rp, "poolseaDAONodeTrustedSettingsProposals", "proposal.vote.blocks", proposalVoteBlocks, {
 				from: owner,
 				gas: gasLimit,
 			});
 			// Set a small vote delay
-			await setDAONodeTrustedBootstrapSetting(web3, rp, "rocketDAONodeTrustedSettingsProposals", "proposal.vote.delay.blocks", proposalVoteDelayBlocks, {
+			await setDAONodeTrustedBootstrapSetting(web3, rp, "poolseaDAONodeTrustedSettingsProposals", "proposal.vote.delay.blocks", proposalVoteDelayBlocks, {
 				from: owner,
 				gas: gasLimit,
 			});
@@ -190,7 +190,7 @@ export default function runNetworkBalancesTests(web3: Web3, rp: RocketPool) {
 			const rethSupply = web3.utils.toWei("8", "ether");
 
 			// Disable submissions
-			await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsNetwork", "network.submit.balances.enabled", false, { from: owner });
+			await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsNetwork", "network.submit.balances.enabled", false, { from: owner });
 
 			// Attempt to submit balances
 			await shouldRevert(

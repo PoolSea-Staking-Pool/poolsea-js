@@ -53,7 +53,7 @@ export default function runNodeStakingTests(web3: Web3, rp: RocketPool) {
 			[owner, node, random, trustedNode] = await web3.eth.getAccounts();
 
 			// Set settings
-			await setDAONodeTrustedBootstrapSetting(web3, rp, "rocketDAONodeTrustedSettingsMinipool", "minipool.scrub.period", scrubPeriod, {
+			await setDAONodeTrustedBootstrapSetting(web3, rp, "poolseaDAONodeTrustedSettingsMinipool", "minipool.scrub.period", scrubPeriod, {
 				from: owner,
 				gas: gasLimit,
 			});
@@ -68,14 +68,14 @@ export default function runNodeStakingTests(web3: Web3, rp: RocketPool) {
 				gas: gasLimit,
 			});
 
-			await setNodeTrusted(web3, rp, trustedNode, "rocketpool_1", "node@home.com", owner);
+			await setNodeTrusted(web3, rp, trustedNode, "poolseapool_1", "node@home.com", owner);
 
 			// Mint RPL to accounts
 			const rplAmount = web3.utils.toWei("10000", "ether");
 			await mintRPL(web3, rp, owner, node, rplAmount);
 			await mintRPL(web3, rp, owner, random, rplAmount);
 
-			rocketNodeStaking = await rp.contracts.get("rocketNodeStaking");
+			rocketNodeStaking = await rp.contracts.get("poolseaNodeStaking");
 		});
 
 		it(printTitle("node operator", "can stake RPL"), async () => {

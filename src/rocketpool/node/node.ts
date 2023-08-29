@@ -29,7 +29,7 @@ class Node {
 	 * @returns a Promise<Contract\> with a web3.eth.contract instance of the rocketNodeDeposit contract
 	 */
 	private get rocketNodeDeposit(): Promise<Contract> {
-		return this.contracts.get("rocketNodeDeposit");
+		return this.contracts.get("poolseaNodeDeposit");
 	}
 
 	/**
@@ -37,7 +37,7 @@ class Node {
 	 * @returns a Promise<Contract\> with a web3.eth.contract instance of the rocketNodeManager contract
 	 */
 	private get rocketNodeManager(): Promise<Contract> {
-		return this.contracts.get("rocketNodeManager");
+		return this.contracts.get("poolseaNodeManager");
 	}
 
 	/**
@@ -45,7 +45,7 @@ class Node {
 	 * @returns a Promise<Contract\> with a web3.eth.contract instance of the rocketNodeStaking contract
 	 */
 	private get rocketNodeStaking(): Promise<Contract> {
-		return this.contracts.get("rocketNodeStaking");
+		return this.contracts.get("poolseaNodeStaking");
 	}
 
 	/**
@@ -53,7 +53,7 @@ class Node {
 	 * @returns a Promise<Contract\> with a web3.eth.contract instance of the rocketStorage contract
 	 */
 	private get rocketStorage(): Promise<Contract> {
-		return this.contracts.get("rocketStorage");
+		return this.contracts.get("poolseaStorage");
 	}
 
 	/**

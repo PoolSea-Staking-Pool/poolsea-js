@@ -7,7 +7,7 @@ import { burnFixedRPL } from "./scenario-rpl-burn-fixed";
 
 export async function mintRPL(web3: Web3, rp: RocketPool, _account: string, _amount: string, _owner: string) {
 	// Load contracts
-	const rocketTokenRPL = await rp.contracts.get("rocketTokenRPL");
+	const rocketTokenRPL = await rp.contracts.get("poolseaTokenRPL");
 	// Convert
 	_amount = web3.utils.toWei(_amount.toString(), "ether");
 	// Mint RPL fixed supply for the users to simulate current users having RPL

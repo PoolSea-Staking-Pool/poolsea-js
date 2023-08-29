@@ -69,7 +69,7 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 			[guardian, userOne, registeredNode1, registeredNode2, registeredNode3, registeredNodeTrusted1, registeredNodeTrusted2, registeredNodeTrusted3] =
 				await web3.eth.getAccounts();
 
-			const rocketStorage = await rp.contracts.get("rocketStorage");
+			const rocketStorage = await rp.contracts.get("poolseaStorage");
 
 			// Register nodes
 			await rp.node.registerNode("Australia/Brisbane", {
@@ -98,20 +98,20 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 			});
 
 			// Add members to the DAO
-			await setNodeTrusted(web3, rp, registeredNodeTrusted1, "rocketpool_1", "node@home.com", guardian);
-			await setNodeTrusted(web3, rp, registeredNodeTrusted2, "rocketpool_2", "node@home.com", guardian);
+			await setNodeTrusted(web3, rp, registeredNodeTrusted1, "poolseapool_1", "node@home.com", guardian);
+			await setNodeTrusted(web3, rp, registeredNodeTrusted2, "poolseapool_2", "node@home.com", guardian);
 
 			// Deploy new contracts
-			rocketMinipoolManagerNew = await rp.contracts.make("rocketMinipoolManager", guardian);
-			rocketDAONodeTrustedUpgradeNew = await rp.contracts.make("rocketDAONodeTrustedUpgrade", guardian);
+			rocketMinipoolManagerNew = await rp.contracts.make("poolseaMinipoolManager", guardian);
+			rocketDAONodeTrustedUpgradeNew = await rp.contracts.make("poolseaDAONodeTrustedUpgrade", guardian);
 
 			// Set a small proposal cooldown
-			await setDAONodeTrustedBootstrapSetting(web3, rp, "rocketDAONodeTrustedSettingsProposals", "proposal.cooldown", 10, {
+			await setDAONodeTrustedBootstrapSetting(web3, rp, "poolseaDAONodeTrustedSettingsProposals", "proposal.cooldown", 10, {
 				from: guardian,
 				gas: gasLimit,
 			});
 			// Set a small vote delay
-			await setDAONodeTrustedBootstrapSetting(web3, rp, "rocketDAONodeTrustedSettingsProposals", "proposal.vote.delay.blocks", 4, {
+			await setDAONodeTrustedBootstrapSetting(web3, rp, "poolseaDAONodeTrustedSettingsProposals", "proposal.vote.delay.blocks", 4, {
 				from: guardian,
 				gas: gasLimit,
 			});
@@ -123,7 +123,7 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 		it(printTitle("userOne", "fails to be added as a trusted node dao member as they are not a registered node"), async () => {
 			// Set as trusted dao member via bootstrapping
 			await shouldRevert(
-				setDAONodeTrustedBootstrapMember(web3, rp, "rocketpool", "node@home.com", userOne, {
+				setDAONodeTrustedBootstrapMember(web3, rp, "poolseapool", "node@home.com", userOne, {
 					from: guardian,
 					gas: gasLimit,
 				}),
@@ -135,7 +135,7 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 		it(printTitle("userOne", "fails to add a bootstrap trusted node DAO member as non guardian"), async () => {
 			// Set as trusted dao member via bootstrapping
 			await shouldRevert(
-				setDAONodeTrustedBootstrapMember(web3, rp, "rocketpool", "node@home.com", registeredNode1, {
+				setDAONodeTrustedBootstrapMember(web3, rp, "poolseapool", "node@home.com", registeredNode1, {
 					from: userOne,
 					gas: gasLimit,
 				}),
@@ -147,7 +147,7 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 		it(printTitle("guardian", "cannot add the same member twice"), async () => {
 			// Set as trusted dao member via bootstrapping
 			await shouldRevert(
-				setDAONodeTrustedBootstrapMember(web3, rp, "rocketpool", "node@home.com", registeredNodeTrusted2, {
+				setDAONodeTrustedBootstrapMember(web3, rp, "poolseapool", "node@home.com", registeredNodeTrusted2, {
 					from: guardian,
 					gas: gasLimit,
 				}),
@@ -158,7 +158,7 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 
 		it(printTitle("guardian", "updates quorum setting while bootstrap mode is enabled"), async () => {
 			// Set as trusted dao member via bootstrapping
-			await setDAONodeTrustedBootstrapSetting(web3, rp, "rocketDAONodeTrustedSettingsMembers", "members.quorum", web3.utils.toWei("0.55"), {
+			await setDAONodeTrustedBootstrapSetting(web3, rp, "poolseaDAONodeTrustedSettingsMembers", "members.quorum", web3.utils.toWei("0.55"), {
 				from: guardian,
 				gas: gasLimit,
 			});
@@ -166,7 +166,7 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 
 		it(printTitle("guardian", "updates RPL bond setting while bootstrap mode is enabled"), async () => {
 			// Set RPL Bond at 10K RPL
-			await setDAONodeTrustedBootstrapSetting(web3, rp, "rocketDAONodeTrustedSettingsMembers", "members.rplbond", web3.utils.toWei("10000"), {
+			await setDAONodeTrustedBootstrapSetting(web3, rp, "poolseaDAONodeTrustedSettingsMembers", "members.rplbond", web3.utils.toWei("10000"), {
 				from: guardian,
 				gas: gasLimit,
 			});
@@ -175,7 +175,7 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 		it(printTitle("userOne", "fails to update RPL bond setting while bootstrap mode is enabled as they are not the guardian"), async () => {
 			// Update setting
 			await shouldRevert(
-				setDAONodeTrustedBootstrapSetting(web3, rp, "rocketDAONodeTrustedSettingsMembers", "members.rplbond", web3.utils.toWei("10000"), {
+				setDAONodeTrustedBootstrapSetting(web3, rp, "poolseaDAONodeTrustedSettingsMembers", "members.rplbond", web3.utils.toWei("10000"), {
 					from: userOne,
 					gas: gasLimit,
 				}),
@@ -192,7 +192,7 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 			});
 			// Update setting
 			await shouldRevert(
-				setDAONodeTrustedBootstrapSetting(web3, rp, "rocketDAONodeTrustedSettingsProposals", "members.quorum", web3.utils.toWei("0.55"), {
+				setDAONodeTrustedBootstrapSetting(web3, rp, "poolseaDAONodeTrustedSettingsProposals", "members.quorum", web3.utils.toWei("0.55"), {
 					from: guardian,
 					gas: gasLimit,
 				}),
@@ -204,7 +204,7 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 		it(printTitle("guardian", "fails to set quorum setting as 0% while bootstrap mode is enabled"), async () => {
 			// Update setting
 			await shouldRevert(
-				setDAONodeTrustedBootstrapSetting(web3, rp, "rocketDAONodeTrustedSettingsMembers", "members.quorum", web3.utils.toWei("0"), {
+				setDAONodeTrustedBootstrapSetting(web3, rp, "poolseaDAONodeTrustedSettingsMembers", "members.quorum", web3.utils.toWei("0"), {
 					from: guardian,
 					gas: gasLimit,
 				}),
@@ -216,7 +216,7 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 		it(printTitle("guardian", "fails to set quorum setting above 90% while bootstrap mode is enabled"), async () => {
 			// Update setting
 			await shouldRevert(
-				setDAONodeTrustedBootstrapSetting(web3, rp, "rocketDAONodeTrustedSettingsMembers", "members.quorum", web3.utils.toWei("0.91"), {
+				setDAONodeTrustedBootstrapSetting(web3, rp, "poolseaDAONodeTrustedSettingsMembers", "members.quorum", web3.utils.toWei("0.91"), {
 					from: guardian,
 					gas: gasLimit,
 				}),
@@ -227,8 +227,8 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 
 		it(printTitle("registeredNode1", "verify trusted node quorum votes required is correct"), async () => {
 			// Load contracts
-			const rocketDAONodeTrusted = await rp.contracts.get("rocketDAONodeTrusted");
-			const rocketDAONodeTrustedSettings = await rp.contracts.get("rocketDAONodeTrustedSettingsMembers");
+			const rocketDAONodeTrusted = await rp.contracts.get("poolseaDAONodeTrusted");
+			const rocketDAONodeTrustedSettings = await rp.contracts.get("poolseaDAONodeTrustedSettingsMembers");
 
 			// How many trusted nodes do we have?
 			const trustedNodeCount = await rocketDAONodeTrusted.methods.getMemberCount().call();
@@ -247,7 +247,7 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 			printTitle("registeredNodeTrusted1&2", "create two proposals for two new members that are voted in, one then chooses to leave and is allowed to"),
 			async () => {
 				// Get the DAO settings
-				const daoNodesettings = await rp.contracts.get("rocketDAONodeTrustedSettingsMembers");
+				const daoNodesettings = await rp.contracts.get("poolseaDAONodeTrustedSettingsMembers");
 				// How much RPL is required for a trusted node bond?
 				const rplBondAmount = web3.utils.fromWei(await daoNodesettings.methods.getRPLBond().call());
 				// Disable bootstrap mode
@@ -257,12 +257,12 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 				});
 				// We'll allow the DAO to transfer our RPL bond before joining
 				// We only have 2 members now that bootstrap mode is disabled and proposals can only be made with 3, lets get a regular node to join via the emergency method
-				const rocketTokenRPL = await rp.contracts.get("rocketTokenRPL");
-				const rocketDAONodeTrustedActions = await rp.contracts.get("rocketDAONodeTrustedActions");
+				const rocketTokenRPL = await rp.contracts.get("poolseaTokenRPL");
+				const rocketDAONodeTrustedActions = await rp.contracts.get("poolseaDAONodeTrustedActions");
 				const _amount = web3.utils.toWei(rplBondAmount.toString(), "ether");
 				await mintRPL(web3, rp, registeredNode3, rplBondAmount, guardian);
 				await rocketTokenRPL.methods.approve(rocketDAONodeTrustedActions.options.address, _amount).send({ from: registeredNode3, gas: gasLimit });
-				await setDaoNodeTrustedMemberRequired(web3, rp, "rocketpool_emergency_node_op", "node3@home.com", {
+				await setDaoNodeTrustedMemberRequired(web3, rp, "poolseapool_emergency_node_op", "node3@home.com", {
 					from: registeredNode3,
 					gas: gasLimit,
 				});
@@ -411,7 +411,7 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 		// Test various proposal states
 		it(printTitle("registeredNodeTrusted1", "creates a proposal and verifies the proposal states as it passes and is executed"), async () => {
 			// Add our 3rd member
-			await setNodeTrusted(web3, rp, registeredNode1, "rocketpool", "node@home.com", guardian);
+			await setNodeTrusted(web3, rp, registeredNode1, "poolseapool", "node@home.com", guardian);
 			// Pass some time so the next proposal isn't made at the same time the 3rd member joined
 			await increaseTime(web3, 60);
 			// Now registeredNodeTrusted2 wants to leave
@@ -479,7 +479,7 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 		// Test various proposal states
 		it(printTitle("registeredNodeTrusted1", "creates a proposal and verifies the proposal states as it fails after it expires"), async () => {
 			// Add our 3rd member
-			await setNodeTrusted(web3, rp, registeredNode1, "rocketpool", "node@home.com", guardian);
+			await setNodeTrusted(web3, rp, registeredNode1, "poolseapool", "node@home.com", guardian);
 			await increaseTime(web3, 60);
 			// Now registeredNodeTrusted2 wants to leave
 			// Encode the calldata for the proposal
@@ -545,7 +545,7 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 
 		it(printTitle("registeredNodeTrusted1", "creates a proposal for registeredNode1 to join as a new member but cancels it before it passes"), async () => {
 			// Add our 3rd member
-			await setNodeTrusted(web3, rp, registeredNode3, "rocketpool_3", "node3@home.com", guardian);
+			await setNodeTrusted(web3, rp, registeredNode3, "poolseapool_3", "node3@home.com", guardian);
 			// Encode the calldata for the proposal
 			const proposalCalldata = web3.eth.abi.encodeFunctionCall(
 				{
@@ -587,11 +587,11 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 			),
 			async () => {
 				// Add our 3rd member so proposals can pass
-				await setNodeTrusted(web3, rp, registeredNode3, "rocketpool_3", "node3@home.com", guardian);
+				await setNodeTrusted(web3, rp, registeredNode3, "poolseapool_3", "node3@home.com", guardian);
 				// Setup our proposal settings
 				const proposalCooldownTime = 60 * 60;
 				// Update now while in bootstrap mode
-				await setDAONodeTrustedBootstrapSetting(web3, rp, "rocketDAONodeTrustedSettingsProposals", "proposal.cooldown.time", proposalCooldownTime, {
+				await setDAONodeTrustedBootstrapSetting(web3, rp, "poolseaDAONodeTrustedSettingsProposals", "proposal.cooldown.time", proposalCooldownTime, {
 					from: guardian,
 				});
 				// Encode the calldata for the proposal
@@ -655,7 +655,7 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 			),
 			async () => {
 				// Add our 3rd member so proposals can pass
-				await setNodeTrusted(web3, rp, registeredNode3, "rocketpool_3", "node3@home.com", guardian);
+				await setNodeTrusted(web3, rp, registeredNode3, "poolseapool_3", "node3@home.com", guardian);
 				// Encode the calldata for the proposal
 				const proposalCalldata = web3.eth.abi.encodeFunctionCall(
 					{
@@ -675,7 +675,7 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 					gas: gasLimit,
 				});
 				// Now add a new member after that proposal was created
-				await setNodeTrusted(web3, rp, registeredNode2, "rocketpool_2", "node2@home.com", guardian);
+				await setNodeTrusted(web3, rp, registeredNode2, "poolseapool_2", "node2@home.com", guardian);
 				// Current block
 				const timeCurrent = await getCurrentTime(web3);
 				// Now wait until the cooldown period expires and proposal can be made again
@@ -704,7 +704,7 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 			),
 			async () => {
 				// Add our 3rd member so proposals can pass
-				await setNodeTrusted(web3, rp, registeredNode3, "rocketpool_3", "node3@home.com", guardian);
+				await setNodeTrusted(web3, rp, registeredNode3, "poolseapool_3", "node3@home.com", guardian);
 				// Encode the calldata for the proposal
 				const proposalCalldata = web3.eth.abi.encodeFunctionCall(
 					{
@@ -753,10 +753,10 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 			),
 			async () => {
 				// Add our 3rd member so proposals can pass
-				await setNodeTrusted(web3, rp, registeredNodeTrusted3, "rocketpool_3", "node3@home.com", guardian);
+				await setNodeTrusted(web3, rp, registeredNodeTrusted3, "poolseapool_3", "node3@home.com", guardian);
 				await increaseTime(web3, 60);
 				// Add our 3rd member
-				await setNodeTrusted(web3, rp, registeredNode1, "rocketpool", "node@home.com", guardian);
+				await setNodeTrusted(web3, rp, registeredNode1, "poolseapool", "node@home.com", guardian);
 				await increaseTime(web3, 60);
 				// How much bond has registeredNodeTrusted2 paid?
 				const registeredNodeTrusted2BondAmount = await rp.dao.node.trusted.node
@@ -831,7 +831,7 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 
 		it(printTitle("registeredNode2", "is made a new member after a proposal is created, they fail to vote on that proposal"), async () => {
 			// Add our 3rd member
-			await setNodeTrusted(web3, rp, registeredNodeTrusted3, "rocketpool_3", "node3@home.com", guardian);
+			await setNodeTrusted(web3, rp, registeredNodeTrusted3, "poolseapool_3", "node3@home.com", guardian);
 			await increaseTime(web3, 60);
 			// Encode the calldata for the proposal
 			const proposalCalldata = web3.eth.abi.encodeFunctionCall(
@@ -848,7 +848,7 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 				gas: gasLimit,
 			});
 			// Register new member now
-			await setNodeTrusted(web3, rp, registeredNode2, "rocketpool", "node@home.com", guardian);
+			await setNodeTrusted(web3, rp, registeredNode2, "poolseapool", "node@home.com", guardian);
 			// Current time
 			const timeCurrent = await getCurrentTime(web3);
 			// Now increase time until the proposal is 'active' and can be voted on
@@ -871,7 +871,7 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 
 		it(printTitle("registeredNodeTrusted2", "fails to execute a successful proposal after it expires"), async () => {
 			// Add our 3rd member so proposals can pass
-			await setNodeTrusted(web3, rp, registeredNodeTrusted3, "rocketpool_3", "node3@home.com", guardian);
+			await setNodeTrusted(web3, rp, registeredNodeTrusted3, "poolseapool_3", "node3@home.com", guardian);
 			await increaseTime(web3, 60);
 			// Encode the calldata for the proposal
 			const proposalCalldata = web3.eth.abi.encodeFunctionCall(
@@ -917,7 +917,7 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 
 		it(printTitle("registeredNodeTrusted2", "checks to see if a proposal has expired after being successfully voted for, but not executed"), async () => {
 			// Add our 3rd member so proposals can pass
-			await setNodeTrusted(web3, rp, registeredNodeTrusted3, "rocketpool_3", "node3@home.com", guardian);
+			await setNodeTrusted(web3, rp, registeredNodeTrusted3, "poolseapool_3", "node3@home.com", guardian);
 			await increaseTime(web3, 60);
 			// Encode the calldata for the proposal
 			const proposalCalldata = web3.eth.abi.encodeFunctionCall(
@@ -970,16 +970,16 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 
 		it(printTitle("registeredNodeTrusted1", "challenges another members node to respond and it does successfully in the window required"), async () => {
 			// Add a 3rd member
-			await setNodeTrusted(web3, rp, registeredNode1, "rocketpool_3", "node2@home.com", guardian);
+			await setNodeTrusted(web3, rp, registeredNode1, "poolseapool_3", "node2@home.com", guardian);
 			// Update our challenge settings
 			const challengeWindowTime = 60 * 60;
 			const challengeCooldownTime = 60 * 60;
 			// Update now while in bootstrap mode
-			await setDAONodeTrustedBootstrapSetting(web3, rp, "rocketDAONodeTrustedSettingsMembers", "members.challenge.window", challengeWindowTime, {
+			await setDAONodeTrustedBootstrapSetting(web3, rp, "poolseaDAONodeTrustedSettingsMembers", "members.challenge.window", challengeWindowTime, {
 				from: guardian,
 				gas: gasLimit,
 			});
-			await setDAONodeTrustedBootstrapSetting(web3, rp, "rocketDAONodeTrustedSettingsMembers", "members.challenge.cooldown", challengeCooldownTime, {
+			await setDAONodeTrustedBootstrapSetting(web3, rp, "poolseaDAONodeTrustedSettingsMembers", "members.challenge.cooldown", challengeCooldownTime, {
 				from: guardian,
 				gas: gasLimit,
 			});
@@ -1039,16 +1039,16 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 			printTitle("registeredNodeTrusted1", "challenges another members node to respond, they do not in the window required and lose their membership + bond"),
 			async () => {
 				// Add a 3rd member
-				await setNodeTrusted(web3, rp, registeredNode1, "rocketpool_3", "node2@home.com", guardian);
+				await setNodeTrusted(web3, rp, registeredNode1, "poolseapool_3", "node2@home.com", guardian);
 				// Update our challenge settings
 				const challengeWindowTime = 60 * 60;
 				const challengeCooldownTime = 60 * 60;
 				// Update now while in bootstrap mode
-				await setDAONodeTrustedBootstrapSetting(web3, rp, "rocketDAONodeTrustedSettingsMembers", "members.challenge.window", challengeWindowTime, {
+				await setDAONodeTrustedBootstrapSetting(web3, rp, "poolseaDAONodeTrustedSettingsMembers", "members.challenge.window", challengeWindowTime, {
 					from: guardian,
 					gas: gasLimit,
 				});
-				await setDAONodeTrustedBootstrapSetting(web3, rp, "rocketDAONodeTrustedSettingsMembers", "members.challenge.cooldown", challengeCooldownTime, {
+				await setDAONodeTrustedBootstrapSetting(web3, rp, "poolseaDAONodeTrustedSettingsMembers", "members.challenge.cooldown", challengeCooldownTime, {
 					from: guardian,
 					gas: gasLimit,
 				});
@@ -1104,17 +1104,17 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 				const challengeCost = await rp.dao.node.trusted.settings.getChallengeCost();
 
 				// Add a 3rd member
-				await setNodeTrusted(web3, rp, registeredNode1, "rocketpool_3", "node2@home.com", guardian);
+				await setNodeTrusted(web3, rp, registeredNode1, "poolseapool_3", "node2@home.com", guardian);
 				await increaseTime(web3, 60);
 				// Update our challenge settings
 				const challengeWindowTime = 60 * 60;
 				const challengeCooldownTime = 60 * 60;
 				// Update now while in bootstrap mode
-				await setDAONodeTrustedBootstrapSetting(web3, rp, "rocketDAONodeTrustedSettingsMembers", "members.challenge.window", challengeWindowTime, {
+				await setDAONodeTrustedBootstrapSetting(web3, rp, "poolseaDAONodeTrustedSettingsMembers", "members.challenge.window", challengeWindowTime, {
 					from: guardian,
 					gas: gasLimit,
 				});
-				await setDAONodeTrustedBootstrapSetting(web3, rp, "rocketDAONodeTrustedSettingsMembers", "members.challenge.cooldown", challengeCooldownTime, {
+				await setDAONodeTrustedBootstrapSetting(web3, rp, "poolseaDAONodeTrustedSettingsMembers", "members.challenge.cooldown", challengeCooldownTime, {
 					from: guardian,
 					gas: gasLimit,
 				});
@@ -1164,7 +1164,7 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 		it(printTitle("registered2", "joins the DAO automatically as a member due to the min number of members falling below the min required"), async () => {
 			// Attempt to join as a non node operator
 			await shouldRevert(
-				setDaoNodeTrustedMemberRequired(web3, rp, "rocketpool_emergency_node_op", "node2@home.com", {
+				setDaoNodeTrustedMemberRequired(web3, rp, "poolseapool_emergency_node_op", "node2@home.com", {
 					from: userOne,
 					gas: gasLimit,
 				}),
@@ -1173,7 +1173,7 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 			);
 			// Attempt to join without setting allowance for the bond
 			await shouldRevert(
-				setDaoNodeTrustedMemberRequired(web3, rp, "rocketpool_emergency_node_op", "node2@home.com", {
+				setDaoNodeTrustedMemberRequired(web3, rp, "poolseapool_emergency_node_op", "node2@home.com", {
 					from: registeredNode2,
 					gas: gasLimit,
 				}),
@@ -1181,17 +1181,17 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 				"Not enough allowance given to RocketDAONodeTrusted contract for transfer of RPL bond tokens"
 			);
 			// Get the DAO settings
-			const daoNodeSettings = await rp.contracts.get("rocketDAONodeTrustedSettingsMembers");
+			const daoNodeSettings = await rp.contracts.get("poolseaDAONodeTrustedSettingsMembers");
 			// How much RPL is required for a trusted node bond?
 			const rplBondAmount = web3.utils.fromWei(await daoNodeSettings.methods.getRPLBond().call());
 			// We'll allow the DAO to transfer our RPL bond before joining
-			const rocketTokenRPL = await rp.contracts.get("rocketTokenRPL");
-			const rocketDAONodeTrustedActions = await rp.contracts.get("rocketDAONodeTrustedActions");
+			const rocketTokenRPL = await rp.contracts.get("poolseaTokenRPL");
+			const rocketDAONodeTrustedActions = await rp.contracts.get("poolseaDAONodeTrustedActions");
 			const _amount = web3.utils.toWei(rplBondAmount.toString(), "ether");
 			await mintRPL(web3, rp, registeredNode2, rplBondAmount, guardian);
 			await rocketTokenRPL.methods.approve(rocketDAONodeTrustedActions.options.address, _amount).send({ from: registeredNode2, gas: gasLimit });
 			// Should just be 2 nodes in the DAO now which means a 3rd can join to make up the min count
-			await setDaoNodeTrustedMemberRequired(web3, rp, "rocketpool_emergency_node_op", "node2@home.com", {
+			await setDaoNodeTrustedMemberRequired(web3, rp, "poolseapool_emergency_node_op", "node2@home.com", {
 				from: registeredNode2,
 				gas: gasLimit,
 			});
@@ -1199,20 +1199,20 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 
 		it(printTitle("registered2", "attempt to auto join the DAO automatically and fails as the DAO has the min member count required"), async () => {
 			// Add a 3rd member
-			await setNodeTrusted(web3, rp, registeredNode1, "rocketpool_3", "node@home.com", guardian);
+			await setNodeTrusted(web3, rp, registeredNode1, "poolseapool_3", "node@home.com", guardian);
 			// Get the DAO settings
-			const daoNodeSettings = await rp.contracts.get("rocketDAONodeTrustedSettingsMembers");
+			const daoNodeSettings = await rp.contracts.get("poolseaDAONodeTrustedSettingsMembers");
 			// How much RPL is required for a trusted node bond?
 			const rplBondAmount = web3.utils.fromWei(await daoNodeSettings.methods.getRPLBond().call());
 			// We'll allow the DAO to transfer our RPL bond before joining
-			const rocketTokenRPL = await rp.contracts.get("rocketTokenRPL");
-			const rocketDAONodeTrustedActions = await rp.contracts.get("rocketDAONodeTrustedActions");
+			const rocketTokenRPL = await rp.contracts.get("poolseaTokenRPL");
+			const rocketDAONodeTrustedActions = await rp.contracts.get("poolseaDAONodeTrustedActions");
 			const _amount = web3.utils.toWei(rplBondAmount.toString(), "ether");
 			await mintRPL(web3, rp, registeredNode1, rplBondAmount, guardian);
 			await rocketTokenRPL.methods.approve(rocketDAONodeTrustedActions.options.address, _amount).send({ from: registeredNode1, gas: gasLimit });
 			// Should just be 2 nodes in the DAO now which means a 3rd can join to make up the min count
 			await shouldRevert(
-				setDaoNodeTrustedMemberRequired(web3, rp, "rocketpool_emergency_node_op", "node2@home.com", {
+				setDaoNodeTrustedMemberRequired(web3, rp, "poolseapool_emergency_node_op", "node2@home.com", {
 					from: registeredNode2,
 					gas: gasLimit,
 				}),
@@ -1225,25 +1225,25 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 
 		// Contracts
 		it(printTitle("guardian", "can upgrade a contract in bootstrap mode"), async () => {
-			const abi = await rp.contracts.abi("rocketMinipoolManager");
-			await setDaoNodeTrustedBootstrapUpgrade(web3, rp, "upgradeContract", "rocketNodeManager", abi, rocketMinipoolManagerNew.options.address, {
+			const abi = await rp.contracts.abi("poolseaMinipoolManager");
+			await setDaoNodeTrustedBootstrapUpgrade(web3, rp, "upgradeContract", "poolseaNodeManager", abi, rocketMinipoolManagerNew.options.address, {
 				from: guardian,
 				gas: gasLimit,
 			});
 		});
 
 		it(printTitle("guardian", "can upgrade the upgrade contract"), async () => {
-			const abi = await rp.contracts.abi("rocketDAONodeTrustedUpgrade");
-			await setDaoNodeTrustedBootstrapUpgrade(web3, rp, "upgradeContract", "rocketDAONodeTrustedUpgrade", abi, rocketDAONodeTrustedUpgradeNew.options.address, {
+			const abi = await rp.contracts.abi("poolseaDAONodeTrustedUpgrade");
+			await setDaoNodeTrustedBootstrapUpgrade(web3, rp, "upgradeContract", "poolseaDAONodeTrustedUpgrade", abi, rocketDAONodeTrustedUpgradeNew.options.address, {
 				from: guardian,
 				gas: gasLimit,
 			});
 		});
 
 		it(printTitle("userOne", "cannot upgrade a contract in bootstrap mode"), async () => {
-			const abi = await rp.contracts.abi("rocketMinipoolManager");
+			const abi = await rp.contracts.abi("poolseaMinipoolManager");
 			await shouldRevert(
-				setDaoNodeTrustedBootstrapUpgrade(web3, rp, "upgradeContract", "rocketNodeManager", abi, rocketMinipoolManagerNew.options.address, {
+				setDaoNodeTrustedBootstrapUpgrade(web3, rp, "upgradeContract", "poolseaNodeManager", abi, rocketMinipoolManagerNew.options.address, {
 					from: userOne,
 					gas: gasLimit,
 				}),
@@ -1253,9 +1253,9 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 		});
 
 		it(printTitle("guardian", "cannot upgrade a contract with an invalid address"), async () => {
-			const abi = await rp.contracts.abi("rocketMinipoolManager");
+			const abi = await rp.contracts.abi("poolseaMinipoolManager");
 			await shouldRevert(
-				setDaoNodeTrustedBootstrapUpgrade(web3, rp, "upgradeContract", "rocketNodeManager", abi, "0x0000000000000000000000000000000000000000", {
+				setDaoNodeTrustedBootstrapUpgrade(web3, rp, "upgradeContract", "poolseaNodeManager", abi, "0x0000000000000000000000000000000000000000", {
 					from: guardian,
 					gas: gasLimit,
 				}),
@@ -1265,9 +1265,9 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 		});
 
 		it(printTitle("guardian", "cannot upgrade a contract with an existing one"), async () => {
-			const rocketStorage = await rp.contracts.get("rocketStorage");
+			const rocketStorage = await rp.contracts.get("poolseaStorage");
 			await shouldRevert(
-				setDaoNodeTrustedBootstrapUpgrade(web3, rp, "upgradeContract", "rocketNodeManager", [], rocketStorage.options.address, {
+				setDaoNodeTrustedBootstrapUpgrade(web3, rp, "upgradeContract", "poolseaNodeManager", [], rocketStorage.options.address, {
 					from: guardian,
 					gas: gasLimit,
 				}),
@@ -1278,7 +1278,7 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 
 		it(printTitle("guardian", "cannot upgrade a contract with an empty ABI"), async () => {
 			await shouldRevert(
-				setDaoNodeTrustedBootstrapUpgrade(web3, rp, "upgradeContract", "rocketDAONodeTrustedUpgrade", "", rocketDAONodeTrustedUpgradeNew.options.address, {
+				setDaoNodeTrustedBootstrapUpgrade(web3, rp, "upgradeContract", "poolseaDAONodeTrustedUpgrade", "", rocketDAONodeTrustedUpgradeNew.options.address, {
 					from: guardian,
 					gas: gasLimit,
 				}),
@@ -1288,9 +1288,9 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 		});
 
 		it(printTitle("guardian", "cannot upgrade a protected contract"), async () => {
-			const abi = await rp.contracts.abi("rocketMinipoolManager");
+			const abi = await rp.contracts.abi("poolseaMinipoolManager");
 			await shouldRevert(
-				setDaoNodeTrustedBootstrapUpgrade(web3, rp, "upgradeContract", "rocketVault", abi, rocketMinipoolManagerNew.options.address, {
+				setDaoNodeTrustedBootstrapUpgrade(web3, rp, "upgradeContract", "poolseaVault", abi, rocketMinipoolManagerNew.options.address, {
 					from: guardian,
 					gas: gasLimit,
 				}),
@@ -1300,17 +1300,17 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 		});
 
 		it(printTitle("guardian", "can add a contract in bootstrap mode"), async () => {
-			const abi = await rp.contracts.abi("rocketMinipoolManager");
-			await setDaoNodeTrustedBootstrapUpgrade(web3, rp, "addContract", "rocketMinipoolManagerNew", abi, rocketMinipoolManagerNew.options.address, {
+			const abi = await rp.contracts.abi("poolseaMinipoolManager");
+			await setDaoNodeTrustedBootstrapUpgrade(web3, rp, "addContract", "poolseaMinipoolManagerNew", abi, rocketMinipoolManagerNew.options.address, {
 				from: guardian,
 				gas: gasLimit,
 			});
 		});
 
 		it(printTitle("guardian", "cannot add a contract with the same name as an existing one"), async () => {
-			const abi = await rp.contracts.abi("rocketMinipoolManager");
+			const abi = await rp.contracts.abi("poolseaMinipoolManager");
 			await shouldRevert(
-				setDaoNodeTrustedBootstrapUpgrade(web3, rp, "addContract", "rocketStorage", abi, rocketMinipoolManagerNew.options.address, {
+				setDaoNodeTrustedBootstrapUpgrade(web3, rp, "addContract", "poolseaStorage", abi, rocketMinipoolManagerNew.options.address, {
 					from: guardian,
 					gas: gasLimit,
 				}),
@@ -1320,10 +1320,10 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 		});
 
 		it(printTitle("guardian", "cannot add a contract with an existing address"), async () => {
-			const rocketStorage = await rp.contracts.get("rocketStorage");
-			const abi = await rp.contracts.abi("rocketMinipoolManager");
+			const rocketStorage = await rp.contracts.get("poolseaStorage");
+			const abi = await rp.contracts.abi("poolseaMinipoolManager");
 			await shouldRevert(
-				setDaoNodeTrustedBootstrapUpgrade(web3, rp, "addContract", "rocketNewContract", abi, rocketStorage.options.address, {
+				setDaoNodeTrustedBootstrapUpgrade(web3, rp, "addContract", "poolseaNewContract", abi, rocketStorage.options.address, {
 					from: guardian,
 					gas: gasLimit,
 				}),
@@ -1333,7 +1333,7 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 		});
 
 		it(printTitle("guardian", "cannot add a new contract with an invalid name"), async () => {
-			const abi = await rp.contracts.abi("rocketMinipoolManager");
+			const abi = await rp.contracts.abi("poolseaMinipoolManager");
 			await shouldRevert(
 				setDaoNodeTrustedBootstrapUpgrade(web3, rp, "addContract", "", abi, rocketMinipoolManagerNew.options.address, {
 					from: guardian,
@@ -1346,7 +1346,7 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 
 		it(printTitle("guardian", "cannot add a new contract with an empty ABI"), async () => {
 			await shouldRevert(
-				setDaoNodeTrustedBootstrapUpgrade(web3, rp, "addContract", "rocketNewContract", "", rocketMinipoolManagerNew.options.address, {
+				setDaoNodeTrustedBootstrapUpgrade(web3, rp, "addContract", "poolseaNewContract", "", rocketMinipoolManagerNew.options.address, {
 					from: guardian,
 					gas: gasLimit,
 				}),
@@ -1357,10 +1357,10 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 
 		it(printTitle("registeredNodeTrusted1", "creates a proposal to upgrade a network contract, it passes and is executed"), async () => {
 			// Load contracts
-			const rocketStorage = await rp.contracts.get("rocketStorage");
+			const rocketStorage = await rp.contracts.get("poolseaStorage");
 			// Add a 3rd member
-			await setNodeTrusted(web3, rp, registeredNode1, "rocketpool_3", "node2@home.com", guardian);
-			const abi = await rp.contracts.abi("rocketMinipoolManager");
+			await setNodeTrusted(web3, rp, registeredNode1, "poolseapool_3", "node2@home.com", guardian);
+			const abi = await rp.contracts.abi("poolseaMinipoolManager");
 			// Encode the calldata for the proposal
 			const proposalCalldata = web3.eth.abi.encodeFunctionCall(
 				{
@@ -1373,7 +1373,7 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 						{ type: "address", name: "_contractAddress" },
 					],
 				},
-				["upgradeContract", "rocketNodeManager", compressABI(abi), rocketMinipoolManagerNew.options.address]
+				["upgradeContract", "poolseaNodeManager", compressABI(abi), rocketMinipoolManagerNew.options.address]
 			);
 			// Add the proposal
 			const proposalID = await daoNodeTrustedPropose(
@@ -1405,7 +1405,7 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 			});
 			// Lets check if the address matches the upgraded one now
 			assert.equal(
-				await rocketStorage.methods.getAddress(web3.utils.soliditySha3("contract.address", "rocketNodeManager")).call(),
+				await rocketStorage.methods.getAddress(web3.utils.soliditySha3("contract.address", "poolseaNodeManager")).call(),
 				rocketMinipoolManagerNew.options.address,
 				"Contract address was not successfully upgraded"
 			);
@@ -1419,11 +1419,11 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 			printTitle("registeredNodeTrusted1", "creates a proposal for registeredNode1 to join as a new member, member joins, is kicked, then cannot rejoin"),
 			async () => {
 				// Get the DAO settings
-				const daoNodesettings = await rp.contracts.get("rocketDAONodeTrustedSettingsMembers");
+				const daoNodesettings = await rp.contracts.get("poolseaDAONodeTrustedSettingsMembers");
 				// How much RPL is required for a trusted node bond?
 				const rplBondAmount = web3.utils.fromWei(await daoNodesettings.methods.getRPLBond().call());
 				// Add our 3rd member so proposals can pass
-				await setNodeTrusted(web3, rp, registeredNodeTrusted3, "rocketpool_3", "node3@home.com", guardian);
+				await setNodeTrusted(web3, rp, registeredNodeTrusted3, "poolseapool_3", "node3@home.com", guardian);
 				// New Member
 				// Encode the calldata for the proposal
 				const proposalCalldata1 = web3.eth.abi.encodeFunctionCall(
@@ -1467,8 +1467,8 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 				});
 				// Member has now been invited to join, so lets do that
 				// We'll allow the DAO to transfer our RPL bond before joining
-				const rocketTokenRPL = await rp.contracts.get("rocketTokenRPL");
-				const rocketDAONodeTrustedActions = await rp.contracts.get("rocketDAONodeTrustedActions");
+				const rocketTokenRPL = await rp.contracts.get("poolseaTokenRPL");
+				const rocketDAONodeTrustedActions = await rp.contracts.get("poolseaDAONodeTrustedActions");
 				const _amount = web3.utils.toWei(rplBondAmount.toString(), "ether");
 				await mintRPL(web3, rp, registeredNode1, rplBondAmount, guardian);
 				await rocketTokenRPL.methods.approve(rocketDAONodeTrustedActions.options.address, _amount).send({ from: registeredNode1, gas: gasLimit });
@@ -1543,22 +1543,22 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 
 		// ABIs - contract address field is ignored
 		it(printTitle("guardian", "can upgrade a contract ABI in bootstrap mode"), async () => {
-			const abi = await rp.contracts.abi("rocketMinipoolManager");
-			await setDaoNodeTrustedBootstrapUpgrade(web3, rp, "upgradeABI", "rocketNodeManager", abi, "0x0000000000000000000000000000000000000000", {
+			const abi = await rp.contracts.abi("poolseaMinipoolManager");
+			await setDaoNodeTrustedBootstrapUpgrade(web3, rp, "upgradeABI", "poolseaNodeManager", abi, "0x0000000000000000000000000000000000000000", {
 				from: guardian,
 				gas: gasLimit,
 			});
 		});
 
 		it(printTitle("guardian", "cannot upgrade a contract ABI to an identical one in bootstrap mode"), async () => {
-			const abi = await rp.contracts.abi("rocketMinipoolManager");
-			await setDaoNodeTrustedBootstrapUpgrade(web3, rp, "upgradeABI", "rocketNodeManager", abi, "0x0000000000000000000000000000000000000000", {
+			const abi = await rp.contracts.abi("poolseaMinipoolManager");
+			await setDaoNodeTrustedBootstrapUpgrade(web3, rp, "upgradeABI", "poolseaNodeManager", abi, "0x0000000000000000000000000000000000000000", {
 				from: guardian,
 				gas: gasLimit,
 			});
 
 			await shouldRevert(
-				setDaoNodeTrustedBootstrapUpgrade(web3, rp, "upgradeABI", "rocketNodeManager", abi, "0x0000000000000000000000000000000000000000", {
+				setDaoNodeTrustedBootstrapUpgrade(web3, rp, "upgradeABI", "poolseaNodeManager", abi, "0x0000000000000000000000000000000000000000", {
 					from: guardian,
 					gas: gasLimit,
 				}),
@@ -1568,7 +1568,7 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 		});
 
 		it(printTitle("guardian", "cannot upgrade a contract ABI which does not exist"), async () => {
-			const abi = await rp.contracts.abi("rocketMinipoolManager");
+			const abi = await rp.contracts.abi("poolseaMinipoolManager");
 			await shouldRevert(
 				setDaoNodeTrustedBootstrapUpgrade(web3, rp, "upgradeABI", "fooBarBaz", abi, "0x0000000000000000000000000000000000000000", {
 					from: guardian,
@@ -1580,9 +1580,9 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 		});
 
 		it(printTitle("userOne", "cannot upgrade a contract ABI"), async () => {
-			const abi = await rp.contracts.abi("rocketMinipoolManager");
+			const abi = await rp.contracts.abi("poolseaMinipoolManager");
 			await shouldRevert(
-				setDaoNodeTrustedBootstrapUpgrade(web3, rp, "upgradeABI", "rocketNodeManager", abi, "0x0000000000000000000000000000000000000000", {
+				setDaoNodeTrustedBootstrapUpgrade(web3, rp, "upgradeABI", "poolseaNodeManager", abi, "0x0000000000000000000000000000000000000000", {
 					from: userOne,
 					gas: gasLimit,
 				}),
@@ -1592,15 +1592,15 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 		});
 
 		it(printTitle("guardian", "can add a contract ABI in bootstrap mode"), async () => {
-			const abi = await rp.contracts.abi("rocketMinipoolManager");
-			await setDaoNodeTrustedBootstrapUpgrade(web3, rp, "addABI", "rocketNewFeature", abi, "0x0000000000000000000000000000000000000000", {
+			const abi = await rp.contracts.abi("poolseaMinipoolManager");
+			await setDaoNodeTrustedBootstrapUpgrade(web3, rp, "addABI", "poolseaNewFeature", abi, "0x0000000000000000000000000000000000000000", {
 				from: guardian,
 				gas: gasLimit,
 			});
 		});
 
 		it(printTitle("guardian", "cannot add a new contract ABI with an invalid name"), async () => {
-			const abi = await rp.contracts.abi("rocketMinipoolManager");
+			const abi = await rp.contracts.abi("poolseaMinipoolManager");
 			await shouldRevert(
 				setDaoNodeTrustedBootstrapUpgrade(web3, rp, "addABI", "", abi, "0x0000000000000000000000000000000000000000", {
 					from: guardian,
@@ -1613,7 +1613,7 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 
 		it(printTitle("guardian", "cannot add a new contract ABI with an empty ABI"), async () => {
 			await shouldRevert(
-				setDaoNodeTrustedBootstrapUpgrade(web3, rp, "addABI", "rocketNewFeatures", "", "0x0000000000000000000000000000000000000000", {
+				setDaoNodeTrustedBootstrapUpgrade(web3, rp, "addABI", "poolseaNewFeatures", "", "0x0000000000000000000000000000000000000000", {
 					from: guardian,
 					gas: gasLimit,
 				}),
@@ -1623,9 +1623,9 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 		});
 
 		it(printTitle("guardian", "cannot add a new contract ABI with an existing name"), async () => {
-			const abi = await rp.contracts.abi("rocketMinipoolManager");
+			const abi = await rp.contracts.abi("poolseaMinipoolManager");
 			await shouldRevert(
-				setDaoNodeTrustedBootstrapUpgrade(web3, rp, "addABI", "rocketNodeManager", abi, "0x0000000000000000000000000000000000000000", {
+				setDaoNodeTrustedBootstrapUpgrade(web3, rp, "addABI", "poolseaNodeManager", abi, "0x0000000000000000000000000000000000000000", {
 					from: guardian,
 					gas: gasLimit,
 				}),
@@ -1635,9 +1635,9 @@ export default function runDAONodeTrusted(web3: Web3, rp: RocketPool) {
 		});
 
 		it(printTitle("userOne", "cannot add a new contract ABI"), async () => {
-			const abi = await rp.contracts.abi("rocketMinipoolManager");
+			const abi = await rp.contracts.abi("poolseaMinipoolManager");
 			await shouldRevert(
-				setDaoNodeTrustedBootstrapUpgrade(web3, rp, "addABI", "rocketNewFeature", abi, "0x0000000000000000000000000000000000000000", {
+				setDaoNodeTrustedBootstrapUpgrade(web3, rp, "addABI", "poolseaNewFeature", abi, "0x0000000000000000000000000000000000000000", {
 					from: userOne,
 					gas: gasLimit,
 				}),

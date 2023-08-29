@@ -7,9 +7,9 @@ import RocketPool from "../../rocketpool/rocketpool";
 // Stake RPL against the node
 export async function stakeRpl(web3: Web3, rp: RocketPool, amount: string, options: SendOptions) {
 	// Load contracts
-	const rocketDAOProtocolSettingsNode = await rp.contracts.get("rocketDAOProtocolSettingsNode");
-	const rocketTokenRPL = await rp.contracts.get("rocketTokenRPL");
-	const rocketVault = await rp.contracts.get("rocketVault");
+	const rocketDAOProtocolSettingsNode = await rp.contracts.get("poolseaDAOProtocolSettingsNode");
+	const rocketTokenRPL = await rp.contracts.get("poolseaTokenRPL");
+	const rocketVault = await rp.contracts.get("poolseaVault");
 
 	// Get parameters
 	const [depositUserAmount, minPerMinipoolStake, maxPerMinipoolStake, rplPrice] = await Promise.all([
@@ -31,7 +31,7 @@ export async function stakeRpl(web3: Web3, rp: RocketPool, amount: string, optio
 			rp.tokens.rpl.balanceOf(nodeAddress).then((value: any) => web3.utils.toBN(value)),
 			rp.tokens.rpl.balanceOf(rocketVault.options.address).then((value: any) => web3.utils.toBN(value)),
 			rocketVault.methods
-				.balanceOfToken("rocketNodeStaking", rocketTokenRPL.options.address)
+				.balanceOfToken("poolseaNodeStaking", rocketTokenRPL.options.address)
 				.call()
 				.then((value: any) => web3.utils.toBN(value)),
 		]).then(([nodeRpl, vaultRpl, stakingRpl]) => ({

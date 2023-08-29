@@ -25,8 +25,8 @@ export async function getRethTotalSupply(web3: Web3, rp: RocketPool) {
 
 // Mint RPL to an address
 export async function mintRPL(web3: Web3, rp: RocketPool, owner: string, toAddress: string, amount: string) {
-	const rocketTokenRPL = await rp.contracts.get("rocketTokenRPL");
-	const rocketTokenDummyRPL = await rp.contracts.get("rocketTokenRPLFixedSupply");
+	const rocketTokenRPL = await rp.contracts.get("poolseaTokenRPL");
+	const rocketTokenDummyRPL = await rp.contracts.get("poolseaTokenRPLFixedSupply");
 
 	const gasPrice = web3.utils.toBN(web3.utils.toWei("20", "gwei")).toString();
 	const gas = 10000000;

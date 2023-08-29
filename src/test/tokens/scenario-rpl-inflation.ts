@@ -29,8 +29,8 @@ export async function rplClaimInflation(web3: Web3, rp: RocketPool, config: Clai
 	}
 
 	// Load contracts
-	const rocketTokenRPL = await rp.contracts.get("rocketTokenRPL");
-	const rocketVault = await rp.contracts.get("rocketVault");
+	const rocketTokenRPL = await rp.contracts.get("poolseaTokenRPL");
+	const rocketVault = await rp.contracts.get("poolseaVault");
 
 	// Get the previously last inflation calculated block
 	const timeIntervalLastCalc = web3.utils.toBN(await rocketTokenRPL.methods.getInflationCalcTime().call());
@@ -49,7 +49,7 @@ export async function rplClaimInflation(web3: Web3, rp: RocketPool, config: Clai
 				.call()
 				.then((value: any) => web3.utils.toBN(value)),
 			rocketVault.methods
-				.balanceOfToken("rocketRewardsPool", rocketTokenRPL.options.address)
+				.balanceOfToken("poolseaRewardsPool", rocketTokenRPL.options.address)
 				.call()
 				.then((value: any) => web3.utils.toBN(value)),
 		]).then(

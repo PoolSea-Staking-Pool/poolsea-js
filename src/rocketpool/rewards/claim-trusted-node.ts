@@ -23,7 +23,7 @@ class Rewards {
 	 * @returns a Promise<Contract\> with a web3.eth.contract instance of the rocketClaimTrustedNode contract
 	 */
 	private get rocketClaimTrustedNode(): Promise<Contract> {
-		return this.contracts.get("rocketClaimTrustedNode");
+		return this.contracts.get("poolseaClaimTrustedNode");
 	}
 
 	/**

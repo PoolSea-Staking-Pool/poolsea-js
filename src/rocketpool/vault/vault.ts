@@ -20,7 +20,7 @@ class Vault {
 	 * @returns a Promise<Contract\> with a web3.eth.contract instance of the rocketVault contract
 	 */
 	private get rocketVault(): Promise<Contract> {
-		return this.contracts.get("rocketVault");
+		return this.contracts.get("poolseaVault");
 	}
 
 	/**

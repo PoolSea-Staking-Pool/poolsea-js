@@ -7,13 +7,13 @@ import RocketPool from "../../rocketpool/rocketpool";
 // Withdraw RPL staked against the node
 export async function withdrawRpl(web3: Web3, rp: RocketPool, amount: string, options: SendOptions) {
 	// Load contracts
-	const rocketMinipoolManager = await rp.contracts.get("rocketMinipoolManager");
-	const rocketDAOProtocolSettingsMinipool = await rp.contracts.get("rocketDAOProtocolSettingsMinipool");
-	const rocketNetworkPrices = await rp.contracts.get("rocketNetworkPrices");
-	const rocketDAOProtocolSettingsNode = await rp.contracts.get("rocketDAOProtocolSettingsNode");
-	const rocketNodeStaking = await rp.contracts.get("rocketNodeStaking");
-	const rocketTokenRPL = await rp.contracts.get("rocketTokenRPL");
-	const rocketVault = await rp.contracts.get("rocketVault");
+	const rocketMinipoolManager = await rp.contracts.get("poolseaMinipoolManager");
+	const rocketDAOProtocolSettingsMinipool = await rp.contracts.get("poolseaDAOProtocolSettingsMinipool");
+	const rocketNetworkPrices = await rp.contracts.get("poolseaNetworkPrices");
+	const rocketDAOProtocolSettingsNode = await rp.contracts.get("poolseaDAOProtocolSettingsNode");
+	const rocketNodeStaking = await rp.contracts.get("poolseaNodeStaking");
+	const rocketTokenRPL = await rp.contracts.get("poolseaTokenRPL");
+	const rocketVault = await rp.contracts.get("poolseaVault");
 
 	// Get parameters
 	const [depositUserAmount, minPerMinipoolStake, maxPerMinipoolStake, rplPrice] = await Promise.all([
@@ -38,7 +38,7 @@ export async function withdrawRpl(web3: Web3, rp: RocketPool, amount: string, op
 			rp.tokens.rpl.balanceOf(nodeAddress).then((value: any) => web3.utils.toBN(value)),
 			rp.tokens.rpl.balanceOf(rocketVault.options.address).then((value: any) => web3.utils.toBN(value)),
 			rocketVault.methods
-				.balanceOfToken("rocketNodeStaking", rocketTokenRPL.options.address)
+				.balanceOfToken("poolseaNodeStaking", rocketTokenRPL.options.address)
 				.call()
 				.then((value: any) => web3.utils.toBN(value)),
 		]).then(([nodeRpl, vaultRpl, stakingRpl]) => ({

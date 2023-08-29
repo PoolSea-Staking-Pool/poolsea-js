@@ -17,7 +17,7 @@ class RETH extends ERC20 {
 	 * @param contracts A Rocket Pool contract manager instance
 	 */
 	public constructor(web3: Web3, contracts: Contracts) {
-		super(web3, contracts, "rocketTokenRETH");
+		super(web3, contracts, "poolseaTokenRETH");
 	}
 
 	/**

@@ -6,7 +6,7 @@ import { SendOptions } from "web3-eth-contract";
 
 export async function allowDummyRPL(web3: Web3, rp: RocketPool, to: string, amount: string, options: SendOptions) {
 	// Load contracts
-	const rocketTokenDummyRPL = await rp.contracts.get("rocketTokenRPLFixedSupply");
+	const rocketTokenDummyRPL = await rp.contracts.get("poolseaTokenRPLFixedSupply");
 
 	// Get balances
 	function getBalances() {

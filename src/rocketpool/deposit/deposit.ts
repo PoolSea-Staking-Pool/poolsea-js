@@ -22,7 +22,7 @@ class Deposit {
 	 * @returns a Promise<Contract\> with a web3.eth.contract instance of the rocketDepositPool contract
 	 */
 	private get rocketDepositPool(): Promise<Contract> {
-		return this.contracts.get("rocketDepositPool");
+		return this.contracts.get("poolseaDepositPool");
 	}
 
 	/**

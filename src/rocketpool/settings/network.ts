@@ -20,7 +20,7 @@ class NetworkSettings {
 	 * @returns a Promise<Contract\> with a web3.eth.contract instance of the rocketDAOProtocolSettingsNetwork contract
 	 */
 	private get rocketDAOProtocolSettingsNetwork(): Promise<Contract> {
-		return this.contracts.get("rocketDAOProtocolSettingsNetwork");
+		return this.contracts.get("poolseaDAOProtocolSettingsNetwork");
 	}
 
 	/**

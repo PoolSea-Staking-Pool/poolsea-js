@@ -15,7 +15,7 @@ export async function stake(
 	withdrawalCredentials: string | null,
 	options: SendOptions
 ) {
-	const rocketDAOProtocolSettingsMinipool = await rp.contracts.get("rocketDAOProtocolSettingsMinipool");
+	const rocketDAOProtocolSettingsMinipool = await rp.contracts.get("poolseaDAOProtocolSettingsMinipool");
 
 	// Get parameters
 	const launchBalance = await rocketDAOProtocolSettingsMinipool.methods

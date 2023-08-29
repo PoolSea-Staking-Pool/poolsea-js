@@ -7,9 +7,9 @@ import RocketPool from "../../rocketpool/rocketpool";
 // Assign deposits
 export async function assignDeposits(web3: Web3, rp: RocketPool, options: SendOptions) {
 	// Load contracts
-	const rocketDAOProtocolSettingsDeposit = await rp.contracts.get("rocketDAOProtocolSettingsDeposit");
-	const rocketDAOProtocolSettingsMinipool = await rp.contracts.get("rocketDAOProtocolSettingsMinipool");
-	const rocketVault = await rp.contracts.get("rocketVault");
+	const rocketDAOProtocolSettingsDeposit = await rp.contracts.get("poolseaDAOProtocolSettingsDeposit");
+	const rocketDAOProtocolSettingsMinipool = await rp.contracts.get("poolseaDAOProtocolSettingsMinipool");
+	const rocketVault = await rp.contracts.get("poolseaVault");
 
 	// Get parameters
 	const [

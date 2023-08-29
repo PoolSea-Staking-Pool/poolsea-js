@@ -20,7 +20,7 @@ class MinipoolSettings {
 	 * @returns a Promise<Contract\> with a web3.eth.contract instance of the rocketDAOProtocolSettingsMinipool contract
 	 */
 	private get rocketDAOProtocolSettingsMinipool(): Promise<Contract> {
-		return this.contracts.get("rocketDAOProtocolSettingsMinipool");
+		return this.contracts.get("poolseaDAOProtocolSettingsMinipool");
 	}
 
 	/**

@@ -144,7 +144,7 @@ export async function daoNodeTrustedMemberJoin(web3: Web3, rp: RocketPool, optio
 		return Promise.all([
 			rp.dao.node.trusted.node.getMemberCount().then((value: any) => web3.utils.toBN(value)),
 			rp.tokens.rpl.balanceOf(options.from).then((value: any) => web3.utils.toBN(value)),
-			rp.vault.balanceOfToken("rocketDAONodeTrustedActions", rocketTokenRPLAddress).then((value: any) => web3.utils.toBN(value)),
+			rp.vault.balanceOfToken("poolseaDAONodeTrustedActions", rocketTokenRPLAddress).then((value: any) => web3.utils.toBN(value)),
 		]).then(([memberTotal, rplBalanceBond, rplBalanceVault]) => ({
 			memberTotal,
 			rplBalanceBond,
@@ -170,7 +170,7 @@ export async function daoNodeTrustedMemberJoin(web3: Web3, rp: RocketPool, optio
 
 	// Check member count has increased
 	assert(ds2.memberTotal.eq(ds1.memberTotal.add(web3.utils.toBN(1))), "Member count has not increased");
-	assert(ds2.rplBalanceVault.eq(ds1.rplBalanceVault.add(ds1.rplBalanceBond)), "RocketVault address does not contain the correct RPL bond amount");
+	assert(ds2.rplBalanceVault.eq(ds1.rplBalanceVault.add(ds1.rplBalanceBond)), "poolseaVault address does not contain the correct RPL bond amount");
 }
 
 // Leave the DAO after a successful leave proposal has passed
@@ -182,7 +182,7 @@ export async function daoNodeTrustedMemberLeave(web3: Web3, rp: RocketPool, _rpl
 		return Promise.all([
 			rp.dao.node.trusted.node.getMemberCount().then((value: any) => web3.utils.toBN(value)),
 			rp.tokens.rpl.balanceOf(_rplRefundAddress).then((value: any) => web3.utils.toBN(value)),
-			rp.vault.balanceOfToken("rocketDAONodeTrustedActions", rocketTokenRPLAddress).then((value: any) => web3.utils.toBN(value)),
+			rp.vault.balanceOfToken("poolseaDAONodeTrustedActions", rocketTokenRPLAddress).then((value: any) => web3.utils.toBN(value)),
 		]).then(([memberTotal, rplBalanceRefund, rplBalanceVault]) => ({
 			memberTotal,
 			rplBalanceRefund,

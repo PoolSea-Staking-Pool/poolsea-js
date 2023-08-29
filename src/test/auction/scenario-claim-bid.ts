@@ -7,8 +7,8 @@ import { SendOptions } from "web3-eth-contract";
 // Claim RPL from a lot
 export async function claimBid(web3: Web3, rp: RocketPool, lotIndex: number, options: SendOptions) {
 	// Load contracts
-	const rocketTokenRPL = await rp.contracts.get("rocketTokenRPL");
-	const rocketVault = await rp.contracts.get("rocketVault");
+	const rocketTokenRPL = await rp.contracts.get("poolseaTokenRPL");
+	const rocketVault = await rp.contracts.get("poolseaVault");
 
 	// Get auction contract details
 	function getContractDetails() {
@@ -38,7 +38,7 @@ export async function claimBid(web3: Web3, rp: RocketPool, lotIndex: number, opt
 			rp.tokens.rpl.balanceOf(bidderAddress).then((value: any) => web3.utils.toBN(value)),
 			rp.tokens.rpl.balanceOf(rocketVault.options.address).then((value: any) => web3.utils.toBN(value)),
 			rocketVault.methods
-				.balanceOfToken("rocketAuctionManager", rocketTokenRPL.options.address)
+				.balanceOfToken("poolseaAuctionManager", rocketTokenRPL.options.address)
 				.call()
 				.then((value: any) => web3.utils.toBN(value)),
 		]).then(([bidderRpl, vaultRpl, contractRpl]) => ({

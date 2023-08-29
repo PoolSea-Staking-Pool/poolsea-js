@@ -8,7 +8,7 @@ import MinipoolContract from "../../rocketpool/minipool/minipool-contract";
 // Withdraw a minipool
 export async function withdraw(web3: Web3, rp: RocketPool, minipool: MinipoolContract, options: SendOptions) {
 	// Load contracts
-	const rocketTokenNETH = await rp.contracts.get("rocketTokenNETH");
+	const rocketTokenNETH = await rp.contracts.get("poolseaTokenNETH");
 
 	// Get parameters
 	const nodeAddress = await minipool.getNodeAddress();

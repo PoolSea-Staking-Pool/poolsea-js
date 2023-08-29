@@ -7,7 +7,7 @@ import RocketPool from "../../rocketpool/rocketpool";
 // Make a deposit
 export async function deposit(web3: Web3, rp: RocketPool, options: SendOptions) {
 	// Load contracts
-	const rocketVault = await rp.contracts.get("rocketVault");
+	const rocketVault = await rp.contracts.get("poolseaVault");
 
 	// Get parameters
 	const rethExchangeRate = await rp.tokens.reth.getExchangeRate().then((value: any) => web3.utils.toBN(value));

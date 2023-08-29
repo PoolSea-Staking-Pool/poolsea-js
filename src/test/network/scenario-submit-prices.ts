@@ -7,8 +7,8 @@ import RocketPool from "../../rocketpool/rocketpool";
 // Submit network prices
 export async function submitPrices(web3: Web3, rp: RocketPool, block: number, rplPrice: string, options: SendOptions) {
 	// Load contracts
-	const rocketDAONodeTrusted = await rp.contracts.get("rocketDAONodeTrusted");
-	const rocketStorage = await rp.contracts.get("rocketStorage");
+	const rocketDAONodeTrusted = await rp.contracts.get("poolseaDAONodeTrusted");
+	const rocketStorage = await rp.contracts.get("poolseaStorage");
 
 	// Get parameters
 	const trustedNodeCount = await rocketDAONodeTrusted.methods

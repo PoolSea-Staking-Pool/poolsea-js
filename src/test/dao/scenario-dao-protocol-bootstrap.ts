@@ -14,7 +14,7 @@ export async function setDAOProtocolBootstrapSetting(
 	options: SendOptions
 ) {
 	// Load contracts
-	const rocketDAOProtocol = await rp.contracts.get("rocketDAOProtocol");
+	const rocketDAOProtocol = await rp.contracts.get("poolseaDAOProtocol");
 	const rocketDAOProtocolSettingsContract = await rp.contracts.get(_settingContractInstance);
 
 	// Get data about the tx
@@ -65,8 +65,8 @@ export async function setDAONetworkBootstrapRewardsClaimer(
 	expectedTotalPerc?: number | null
 ) {
 	// Load contracts
-	const rocketDAOProtocol = await rp.contracts.get("rocketDAOProtocol");
-	const rocketDAOProtocolSettingsRewards = await rp.contracts.get("rocketDAOProtocolSettingsRewards");
+	const rocketDAOProtocol = await rp.contracts.get("poolseaDAOProtocol");
+	const rocketDAOProtocolSettingsRewards = await rp.contracts.get("poolseaDAOProtocolSettingsRewards");
 	// Get data about the tx
 	function getTxData() {
 		return Promise.all([
@@ -108,7 +108,7 @@ export async function setDAONetworkBootstrapRewardsClaimer(
 // Set the current rewards claim period in seconds
 export async function setRewardsClaimIntervalTime(web3: Web3, rp: RocketPool, intervalTime: number, options: SendOptions) {
 	// Set it now
-	await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsRewards", "rpl.rewards.claim.period.time", intervalTime, options);
+	await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsRewards", "rpl.rewards.claim.period.time", intervalTime, options);
 }
 
 // Spend the DAO treasury in bootstrap mode
@@ -121,15 +121,15 @@ export async function spendRewardsClaimTreasury(
 	options: SendOptions
 ) {
 	// Load contracts
-	const rocketDAOProtocol = await rp.contracts.get("rocketDAOProtocol");
-	const rocketTokenRPL = await rp.contracts.get("rocketTokenRPL");
-	const rocketVault = await rp.contracts.get("rocketVault");
+	const rocketDAOProtocol = await rp.contracts.get("poolseaDAOProtocol");
+	const rocketTokenRPL = await rp.contracts.get("poolseaTokenRPL");
+	const rocketVault = await rp.contracts.get("poolseaVault");
 
 	// Get data about the tx
 	function getTxData() {
 		return Promise.all([
 			rocketVault.methods
-				.balanceOfToken("rocketClaimDAO", rocketTokenRPL.options.address)
+				.balanceOfToken("poolseaClaimDAO", rocketTokenRPL.options.address)
 				.call()
 				.then((value: any) => web3.utils.toBN(value)),
 			rocketTokenRPL.methods
@@ -166,19 +166,19 @@ export async function setRPLInflationIntervalRate(web3: Web3, rp: RocketPool, ye
 	// Calculate the inflation rate per day
 	const dailyInflation = web3.utils.toBN((1 + yearlyInflationPerc) ** (1 / 365) * 1e18);
 	// Set it now
-	await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsInflation", "rpl.inflation.interval.rate", dailyInflation, options);
+	await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsInflation", "rpl.inflation.interval.rate", dailyInflation, options);
 }
 
 // Set the current RPL inflation block interval
 export async function setRPLInflationStartTime(web3: Web3, rp: RocketPool, startTime: number, options: SendOptions) {
 	// Set it now
-	await setDAOProtocolBootstrapSetting(web3, rp, "rocketDAOProtocolSettingsInflation", "rpl.inflation.interval.start", startTime, options);
+	await setDAOProtocolBootstrapSetting(web3, rp, "poolseaDAOProtocolSettingsInflation", "rpl.inflation.interval.start", startTime, options);
 }
 
 // Disable bootstrap mode
 export async function setDaoProtocolBootstrapModeDisabled(web3: Web3, rp: RocketPool, options: SendOptions) {
 	// Load contracts
-	const rocketDAOProtocol = await rp.contracts.get("rocketDAOProtocol");
+	const rocketDAOProtocol = await rp.contracts.get("poolseaDAOProtocol");
 
 	// Get data about the tx
 	function getTxData() {
@@ -208,7 +208,7 @@ export async function setDAOProtocolBootstrapSettingMulti(
 	options: SendOptions
 ) {
 	// Load contracts
-	const rocketDAOProtocol = await rp.contracts.get("rocketDAOProtocol");
+	const rocketDAOProtocol = await rp.contracts.get("poolseaDAOProtocol");
 
 	const contractNames = [];
 	const values = [];

@@ -22,7 +22,7 @@ class DAOProposal {
 	 * @returns a Promise<Contract\> with a web3.eth.contract instance of the rocketDAOProposal contract
 	 */
 	private get rocketDAOProposal(): Promise<Contract> {
-		return this.contracts.get("rocketDAOProposal");
+		return this.contracts.get("poolseaDAOProposal");
 	}
 
 	/**

@@ -22,7 +22,7 @@ class Auction {
 	 * @returns a Promise<Contract\> that resolves to a web3.eth.contract instance of the rocketAuctionManager contract
 	 */
 	private get rocketAuctionManager(): Promise<Contract> {
-		return this.contracts.get("rocketAuctionManager");
+		return this.contracts.get("poolseaAuctionManager");
 	}
 
 	/**

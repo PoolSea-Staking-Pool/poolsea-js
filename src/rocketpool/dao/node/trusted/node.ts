@@ -22,7 +22,7 @@ class DAONodeTrusted {
 	 * @returns a Promise<Contract\> with a web3.eth.contract instance of the rocketDAONodeTrusted contract
 	 */
 	private get rocketDAONodeTrusted(): Promise<Contract> {
-		return this.contracts.get("rocketDAONodeTrusted");
+		return this.contracts.get("poolseaDAONodeTrusted");
 	}
 
 	/**
