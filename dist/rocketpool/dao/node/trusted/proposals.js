@@ -159,7 +159,7 @@ var DAONodeTrustedProposals = function () {
     }, {
         key: "rocketDAONodeTrustedProposals",
         get: function get() {
-            return this.contracts.get("rocketDAONodeTrustedProposals");
+            return this.contracts.get("poolseaDAONodeTrustedProposals");
         }
     }]);
 

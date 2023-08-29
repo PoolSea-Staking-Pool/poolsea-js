@@ -123,12 +123,12 @@ function getMinipoolMinimumRPLStake(web3, rp) {
                 switch (_context4.prev = _context4.next) {
                     case 0:
                         _context4.next = 2;
-                        return rp.contracts.get("rocketDAOProtocolSettingsMinipool");
+                        return rp.contracts.get("poolseaDAOProtocolSettingsMinipool");
 
                     case 2:
                         rocketDAOProtocolSettingsMinipool = _context4.sent;
                         _context4.next = 5;
-                        return rp.contracts.get("rocketDAOProtocolSettingsNode");
+                        return rp.contracts.get("poolseaDAOProtocolSettingsNode");
 
                     case 5:
                         rocketDAOProtocolSettingsNode = _context4.sent;
@@ -169,17 +169,17 @@ function createMinipool(web3, rp, options) {
                 switch (_context5.prev = _context5.next) {
                     case 0:
                         _context5.next = 2;
-                        return rp.contracts.get("rocketMinipoolManager");
+                        return rp.contracts.get("poolseaMinipoolManager");
 
                     case 2:
                         rocketMinipoolManager = _context5.sent;
                         _context5.next = 5;
-                        return rp.contracts.get("rocketStorage");
+                        return rp.contracts.get("poolseaStorage");
 
                     case 5:
                         rocketStorage = _context5.sent;
                         _context5.next = 8;
-                        return rp.contracts.address("rocketMinipoolManager");
+                        return rp.contracts.address("poolseaMinipoolManager");
 
                     case 8:
                         minipoolManagerAddress = _context5.sent;

@@ -35,7 +35,7 @@ var RPL = function (_ERC) {
     function RPL(web3, contracts) {
         _classCallCheck(this, RPL);
 
-        return _possibleConstructorReturn(this, (RPL.__proto__ || Object.getPrototypeOf(RPL)).call(this, web3, contracts, "rocketTokenRPL"));
+        return _possibleConstructorReturn(this, (RPL.__proto__ || Object.getPrototypeOf(RPL)).call(this, web3, contracts, "poolseaTokenRPL"));
     }
     /**
      * Get the contract address

@@ -33,7 +33,7 @@ var LegacyRPL = function (_ERC) {
     function LegacyRPL(web3, contracts) {
         _classCallCheck(this, LegacyRPL);
 
-        return _possibleConstructorReturn(this, (LegacyRPL.__proto__ || Object.getPrototypeOf(LegacyRPL)).call(this, web3, contracts, "rocketTokenRPLFixedSupply"));
+        return _possibleConstructorReturn(this, (LegacyRPL.__proto__ || Object.getPrototypeOf(LegacyRPL)).call(this, web3, contracts, "poolseaTokenRPLFixedSupply"));
     }
     /**
      * Get the contract address

@@ -139,7 +139,7 @@ var Deposit = function () {
     }, {
         key: "rocketDepositPool",
         get: function get() {
-            return this.contracts.get("rocketDepositPool");
+            return this.contracts.get("poolseaDepositPool");
         }
     }]);
 

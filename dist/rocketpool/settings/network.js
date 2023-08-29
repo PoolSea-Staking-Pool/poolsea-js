@@ -210,7 +210,7 @@ var NetworkSettings = function () {
     }, {
         key: "rocketDAOProtocolSettingsNetwork",
         get: function get() {
-            return this.contracts.get("rocketDAOProtocolSettingsNetwork");
+            return this.contracts.get("poolseaDAOProtocolSettingsNetwork");
         }
     }]);
 

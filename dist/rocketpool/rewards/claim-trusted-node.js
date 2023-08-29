@@ -78,7 +78,7 @@ var Rewards = function () {
     }, {
         key: "rocketClaimTrustedNode",
         get: function get() {
-            return this.contracts.get("rocketClaimTrustedNode");
+            return this.contracts.get("poolseaClaimTrustedNode");
         }
     }]);
 

@@ -183,7 +183,7 @@ var DAOProposal = function () {
     }, {
         key: "rocketDAOProposal",
         get: function get() {
-            return this.contracts.get("rocketDAOProposal");
+            return this.contracts.get("poolseaDAOProposal");
         }
     }]);
 

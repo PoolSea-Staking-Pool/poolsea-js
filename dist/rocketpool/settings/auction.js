@@ -101,7 +101,7 @@ var AuctionSettings = function () {
     }, {
         key: "rocketDAOProtocolSettingsAuction",
         get: function get() {
-            return this.contracts.get("rocketDAOProtocolSettingsAuction");
+            return this.contracts.get("poolseaDAOProtocolSettingsAuction");
         }
     }]);
 

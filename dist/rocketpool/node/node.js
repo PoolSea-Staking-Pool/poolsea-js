@@ -589,7 +589,7 @@ var Node = function () {
     }, {
         key: "rocketNodeDeposit",
         get: function get() {
-            return this.contracts.get("rocketNodeDeposit");
+            return this.contracts.get("poolseaNodeDeposit");
         }
         /**
          * Private accessor use to retrieve the related contract
@@ -599,7 +599,7 @@ var Node = function () {
     }, {
         key: "rocketNodeManager",
         get: function get() {
-            return this.contracts.get("rocketNodeManager");
+            return this.contracts.get("poolseaNodeManager");
         }
         /**
          * Private accessor use to retrieve the related contract
@@ -609,7 +609,7 @@ var Node = function () {
     }, {
         key: "rocketNodeStaking",
         get: function get() {
-            return this.contracts.get("rocketNodeStaking");
+            return this.contracts.get("poolseaNodeStaking");
         }
         /**
          * Private accessor use to retrieve the related contract
@@ -619,7 +619,7 @@ var Node = function () {
     }, {
         key: "rocketStorage",
         get: function get() {
-            return this.contracts.get("rocketStorage");
+            return this.contracts.get("poolseaStorage");
         }
     }]);
 

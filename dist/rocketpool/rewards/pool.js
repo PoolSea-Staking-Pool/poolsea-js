@@ -198,7 +198,7 @@ var Pool = function () {
     }, {
         key: "rocketRewardsPool",
         get: function get() {
-            return this.contracts.get("rocketRewardsPool");
+            return this.contracts.get("poolseaRewardsPool");
         }
     }]);
 

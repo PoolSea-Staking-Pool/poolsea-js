@@ -67,7 +67,7 @@ var NodeSettings = function () {
     }, {
         key: "rocketDAOProtocolSettingsNode",
         get: function get() {
-            return this.contracts.get("rocketDAOProtocolSettingsNode");
+            return this.contracts.get("poolseaDAOProtocolSettingsNode");
         }
     }]);
 

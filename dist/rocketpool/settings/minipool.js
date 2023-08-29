@@ -207,7 +207,7 @@ var MinipoolSettings = function () {
     }, {
         key: "rocketDAOProtocolSettingsMinipool",
         get: function get() {
-            return this.contracts.get("rocketDAOProtocolSettingsMinipool");
+            return this.contracts.get("poolseaDAOProtocolSettingsMinipool");
         }
     }]);
 

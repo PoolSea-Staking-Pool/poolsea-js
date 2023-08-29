@@ -308,7 +308,7 @@ var DAONodeTrusted = function () {
     }, {
         key: "rocketDAONodeTrusted",
         get: function get() {
-            return this.contracts.get("rocketDAONodeTrusted");
+            return this.contracts.get("poolseaDAONodeTrusted");
         }
     }]);
 

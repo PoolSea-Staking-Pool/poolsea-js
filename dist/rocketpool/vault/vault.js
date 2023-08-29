@@ -69,7 +69,7 @@ var Vault = function () {
     }, {
         key: "rocketVault",
         get: function get() {
-            return this.contracts.get("rocketVault");
+            return this.contracts.get("poolseaVault");
         }
     }]);
 

@@ -402,7 +402,7 @@ var Network = function () {
     }, {
         key: "rocketNetworkBalances",
         get: function get() {
-            return this.contracts.get("rocketNetworkBalances");
+            return this.contracts.get("poolseaNetworkBalances");
         }
         /**
          * Private accessor use to retrieve the related contract
@@ -412,7 +412,7 @@ var Network = function () {
     }, {
         key: "rocketNetworkFees",
         get: function get() {
-            return this.contracts.get("rocketNetworkFees");
+            return this.contracts.get("poolseaNetworkFees");
         }
         /**
          * Private accessor use to retrieve the related contract
@@ -422,7 +422,7 @@ var Network = function () {
     }, {
         key: "rocketNetworkPrices",
         get: function get() {
-            return this.contracts.get("rocketNetworkPrices");
+            return this.contracts.get("poolseaNetworkPrices");
         }
     }]);
 

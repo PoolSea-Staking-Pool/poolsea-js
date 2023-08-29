@@ -516,7 +516,7 @@ var Minipool = function () {
         value: function getMinipoolContract(address) {
             var _this6 = this;
 
-            return this.contracts.make("rocketMinipoolDelegate", address).then(function (rocketMinipool) {
+            return this.contracts.make("poolseaMinipoolDelegate", address).then(function (rocketMinipool) {
                 return new _minipoolContract2.default(_this6.web3, address, rocketMinipool);
             });
         }
@@ -568,7 +568,7 @@ var Minipool = function () {
     }, {
         key: "rocketMinipoolManager",
         get: function get() {
-            return this.contracts.get("rocketMinipoolManager");
+            return this.contracts.get("poolseaMinipoolManager");
         }
         /**
          * Private accessor use to retrieve the related contract
@@ -578,7 +578,7 @@ var Minipool = function () {
     }, {
         key: "rocketMinipoolQueue",
         get: function get() {
-            return this.contracts.get("rocketMinipoolQueue");
+            return this.contracts.get("poolseaMinipoolQueue");
         }
         /**
          * Private accessor use to retrieve the related contract
@@ -588,7 +588,7 @@ var Minipool = function () {
     }, {
         key: "rocketMinipoolStatus",
         get: function get() {
-            return this.contracts.get("rocketMinipoolStatus");
+            return this.contracts.get("poolseaMinipoolStatus");
         }
         /**
          * Private accessor use to retrieve the related contract
@@ -598,7 +598,7 @@ var Minipool = function () {
     }, {
         key: "rocketMinipool",
         get: function get() {
-            return this.contracts.get("rocketMinipool");
+            return this.contracts.get("poolseaMinipool");
         }
     }]);
 

@@ -120,7 +120,7 @@ var DepositSettings = function () {
     }, {
         key: "rocketDAOProtocolSettingsDeposit",
         get: function get() {
-            return this.contracts.get("rocketDAOProtocolSettingsDeposit");
+            return this.contracts.get("poolseaDAOProtocolSettingsDeposit");
         }
     }]);
 

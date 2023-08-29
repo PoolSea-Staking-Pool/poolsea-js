@@ -67,7 +67,7 @@ var DAONodeTrustedSettings = function () {
     }, {
         key: "rocketDAONodeTrustedSettingsProposals",
         get: function get() {
-            return this.contracts.get("rocketDAONodeTrustedSettingsProposals");
+            return this.contracts.get("poolseaDAONodeTrustedSettingsProposals");
         }
         /**
          * Private accessor use to retrieve the related contract
@@ -77,7 +77,7 @@ var DAONodeTrustedSettings = function () {
     }, {
         key: "rocketDAONodeTrustedSettingsMembers",
         get: function get() {
-            return this.contracts.get("rocketDAONodeTrustedSettingsMembers");
+            return this.contracts.get("poolseaDAONodeTrustedSettingsMembers");
         }
         /**
          * Private accessor use to retrieve the related contract
@@ -87,7 +87,7 @@ var DAONodeTrustedSettings = function () {
     }, {
         key: "rocketDAOProtocolSettingsDeposit",
         get: function get() {
-            return this.contracts.get("rocketDAOProtocolSettingsDeposit");
+            return this.contracts.get("poolseaDAOProtocolSettingsDeposit");
         }
         /**
          * Private accessor use to retrieve the related contract
@@ -97,7 +97,7 @@ var DAONodeTrustedSettings = function () {
     }, {
         key: "rocketDAOProtocolSettingsMinipool",
         get: function get() {
-            return this.contracts.get("rocketDAOProtocolSettingsMinipool");
+            return this.contracts.get("poolseaDAOProtocolSettingsMinipool");
         }
     }]);
 

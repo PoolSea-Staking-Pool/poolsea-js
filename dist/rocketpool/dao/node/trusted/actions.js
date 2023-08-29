@@ -135,7 +135,7 @@ var DAONodeTrustedActions = function () {
     }, {
         key: "rocketDAONodeTrustedActions",
         get: function get() {
-            return this.contracts.get("rocketDAONodeTrustedActions");
+            return this.contracts.get("poolseaDAONodeTrustedActions");
         }
     }]);
 

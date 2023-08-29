@@ -475,7 +475,7 @@ var Auction = function () {
     }, {
         key: "rocketAuctionManager",
         get: function get() {
-            return this.contracts.get("rocketAuctionManager");
+            return this.contracts.get("poolseaAuctionManager");
         }
     }]);
 

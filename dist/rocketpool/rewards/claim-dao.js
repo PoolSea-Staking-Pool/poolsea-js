@@ -33,7 +33,7 @@ var Rewards = function () {
   _createClass(Rewards, [{
     key: "rocketClaimDAO",
     get: function get() {
-      return this.contracts.get("rocketClaimDAO");
+      return this.contracts.get("poolseaClaimDAO");
     }
   }]);
 

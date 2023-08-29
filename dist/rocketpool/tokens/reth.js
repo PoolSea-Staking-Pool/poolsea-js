@@ -35,7 +35,7 @@ var RETH = function (_ERC) {
     function RETH(web3, contracts) {
         _classCallCheck(this, RETH);
 
-        return _possibleConstructorReturn(this, (RETH.__proto__ || Object.getPrototypeOf(RETH)).call(this, web3, contracts, "rocketTokenRETH"));
+        return _possibleConstructorReturn(this, (RETH.__proto__ || Object.getPrototypeOf(RETH)).call(this, web3, contracts, "poolseaTokenRETH"));
     }
     /**
      * Get the amount of ETH backing an amount of rETH
