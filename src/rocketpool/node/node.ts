@@ -4,6 +4,7 @@ import { TransactionReceipt } from "web3-core";
 import { Contract, SendOptions } from "web3-eth-contract";
 import Contracts from "../contracts/contracts";
 import { ConfirmationHandler, handleConfirmations } from "../../utils/transaction";
+import keccak256 from "../../utils/keccak256";
 
 // Node details
 export interface NodeDetails {
@@ -372,6 +373,21 @@ class Node {
 		});
 	}
 
+	public getNodeStakeForAllowed(nodeAddress: string, address: string): Promise<boolean> {
+		return this.rocketStorage.then((rocketStorage: Contract): Promise<boolean> => {
+			const encoded = this.web3.utils.encodePacked(
+				{ type: "string", value: "node.stake.for.allowed" },
+				{ type: "address", value: nodeAddress },
+				{ type: "address", value: address }
+			);
+			if (!encoded) {
+				return Promise.resolve(false);
+			}
+
+			return rocketStorage.methods.getBool(keccak256(encoded)).call();
+		});
+	}
+
 	/**
 	 * Register a node
 	 * @param timezoneLocation A string representing the timezone location
@@ -446,12 +462,37 @@ class Node {
 	 *		from: nodeAddress,
 	 *		gas: 1000000
 	 * }
-	 * const txReceipt = rp.node.stakeRPL(nodeAddress, options).then((txReceipt: TransactionReceipt) => { txReceipt };
+	 * const txReceipt = rp.node.stakeRPL(amount, options).then((txReceipt: TransactionReceipt) => { txReceipt };
 	 * ```
 	 */
 	public stakeRPL(amount: string, options?: SendOptions, onConfirmation?: ConfirmationHandler): Promise<TransactionReceipt> {
 		return this.rocketNodeStaking.then((rocketNodeStaking: Contract): Promise<TransactionReceipt> => {
 			return handleConfirmations(rocketNodeStaking.methods.stakeRPL(amount).send(options), onConfirmation);
+		});
+	}
+
+	/**
+	 * Accept an RPL stake from any address for a specified node
+	 * @param nodeAddress A string representing the node's address
+	 * @param amount A string representing the amount in Wei
+	 * @param options An optional object of web3.eth.Contract SendOptions
+	 * @param onConfirmation An optional confirmation handler object
+	 * @returns a Promise<TransactionReceipt\> that resolves to a TransactionReceipt object representing the receipt of the transaction
+	 *
+	 * @example using Typescript
+	 * ```ts
+	 * const amount = web3.utils.toWei("5000", "ether");
+	 * const nodeAddress = "0x24fBeD7Ecd625D3f0FD19a6c9113DEd436172294";
+	 * const options = {
+	 *		from: nodeAddress,
+	 *		gas: 1000000
+	 * }
+	 * const txReceipt = rp.node.stakeRPLFor(nodeAddress, amount, options).then((txReceipt: TransactionReceipt) => { txReceipt };
+	 * ```
+	 */
+	public stakeRPLFor(nodeAddress: string, amount: string, options?: SendOptions, onConfirmation?: ConfirmationHandler): Promise<TransactionReceipt> {
+		return this.rocketNodeStaking.then((rocketNodeStaking: Contract): Promise<TransactionReceipt> => {
+			return handleConfirmations(rocketNodeStaking.methods.stakeRPLFor(nodeAddress, amount).send(options), onConfirmation);
 		});
 	}
 

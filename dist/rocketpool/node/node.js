@@ -10,6 +10,12 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _transaction = require("../../utils/transaction");
 
+var _keccak = require("../../utils/keccak256");
+
+var _keccak2 = _interopRequireDefault(_keccak);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -394,6 +400,19 @@ var Node = function () {
                 return rocketNodeDeposit.methods.getDepositType(amount).call();
             });
         }
+    }, {
+        key: "getNodeStakeForAllowed",
+        value: function getNodeStakeForAllowed(nodeAddress, address) {
+            var _this3 = this;
+
+            return this.rocketStorage.then(function (rocketStorage) {
+                var encoded = _this3.web3.utils.encodePacked({ type: "string", value: "node.stake.for.allowed" }, { type: "address", value: nodeAddress }, { type: "address", value: address });
+                if (!encoded) {
+                    return Promise.resolve(false);
+                }
+                return rocketStorage.methods.getBool((0, _keccak2.default)(encoded)).call();
+            });
+        }
         /**
          * Register a node
          * @param timezoneLocation A string representing the timezone location
@@ -466,7 +485,7 @@ var Node = function () {
          *		from: nodeAddress,
          *		gas: 1000000
          * }
-         * const txReceipt = rp.node.stakeRPL(nodeAddress, options).then((txReceipt: TransactionReceipt) => { txReceipt };
+         * const txReceipt = rp.node.stakeRPL(amount, options).then((txReceipt: TransactionReceipt) => { txReceipt };
          * ```
          */
 
@@ -475,6 +494,33 @@ var Node = function () {
         value: function stakeRPL(amount, options, onConfirmation) {
             return this.rocketNodeStaking.then(function (rocketNodeStaking) {
                 return (0, _transaction.handleConfirmations)(rocketNodeStaking.methods.stakeRPL(amount).send(options), onConfirmation);
+            });
+        }
+        /**
+         * Accept an RPL stake from any address for a specified node
+         * @param nodeAddress A string representing the node's address
+         * @param amount A string representing the amount in Wei
+         * @param options An optional object of web3.eth.Contract SendOptions
+         * @param onConfirmation An optional confirmation handler object
+         * @returns a Promise<TransactionReceipt\> that resolves to a TransactionReceipt object representing the receipt of the transaction
+         *
+         * @example using Typescript
+         * ```ts
+         * const amount = web3.utils.toWei("5000", "ether");
+         * const nodeAddress = "0x24fBeD7Ecd625D3f0FD19a6c9113DEd436172294";
+         * const options = {
+         *		from: nodeAddress,
+         *		gas: 1000000
+         * }
+         * const txReceipt = rp.node.stakeRPLFor(nodeAddress, amount, options).then((txReceipt: TransactionReceipt) => { txReceipt };
+         * ```
+         */
+
+    }, {
+        key: "stakeRPLFor",
+        value: function stakeRPLFor(nodeAddress, amount, options, onConfirmation) {
+            return this.rocketNodeStaking.then(function (rocketNodeStaking) {
+                return (0, _transaction.handleConfirmations)(rocketNodeStaking.methods.stakeRPLFor(nodeAddress, amount).send(options), onConfirmation);
             });
         }
         /**
