@@ -29,7 +29,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-          registry-url: https://npm.pkg.github.com/
+          registry-url: https://npm.pkg.github.com/\
+          scope: "@seb369888"
       - run: npm ci
       - name: Authenticate with the GitHub Package Registry
         run:
