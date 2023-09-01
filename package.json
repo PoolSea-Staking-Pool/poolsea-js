@@ -1,5 +1,5 @@
 {
-	"name": "@poolsea/api",
+	"name": "@seb369888/poolsea-api",
 	"version": "0.0.1",
 	"description": "A javascript library for interacting with the Poolsea network",
 	"main": "dist/rocketpool/rocketpool.js",
