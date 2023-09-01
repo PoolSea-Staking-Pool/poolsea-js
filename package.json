@@ -19,6 +19,9 @@
 		"url": "https://github.com/Seb369888/poolsea-js/issues"
 	},
 	"homepage": "https://github.com/Seb369888/poolsea-js#readme",
+	"publishConfig": {
+		"registry": "https://npm.pkg.github.com/"
+	},
 	"dependencies": {
 		"@types/node": "^14.14.37",
 		"buffer": "^6.0.3",
