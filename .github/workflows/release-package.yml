@@ -1,0 +1,63 @@
+name: release-package
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+        default: patch
+        required: true
+
+jobs:
+  publish-gpr:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      steps:
+      - uses: actions/checkout@v3
+      # Setup .npmrc file to publish to npm
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - uses: actions/cache@v3
+        id: cache
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-npm-
+
+      - name: Install project dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm install
+
+      - name: Build package
+        run: npm build
+
+      - name: Set git config
+        run: |
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions"
+
+      - name: Update package version
+        run: npm version ${{github.event.inputs.version}}
+
+      - name: Push version
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_ACCESS_TOKEN }}
+          branch: ${{ github.ref }}
+
+      - run: npm ci
+
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_ACCESS_TOKEN }}
