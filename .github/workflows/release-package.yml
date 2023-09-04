@@ -21,6 +21,8 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v3
+        with:
+          token: ${{secrets.ACCESS_TOKEN}}
       # Setup .npmrc file to publish to npm
       - uses: actions/setup-node@v3
         with:
@@ -44,8 +46,8 @@ jobs:
 
       - name: Set git config
         run: |
-          git config --global user.email "sebastien@poolsea.com"
-          git config --global user.name "seb369888"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions"
 
       - name: Update package version
         run: git stash && npm version ${{github.event.inputs.version}}
