@@ -26,7 +26,7 @@ jobs:
         with:
           node-version: '16.x'
           registry-url: 'https://npm.pkg.github.com'
-          scope: '@seb369888'
+          scope: '@poolSea-staking-pool'
 
       - uses: actions/cache@v3
         id: cache
@@ -44,8 +44,8 @@ jobs:
 
       - name: Set git config
         run: |
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions"
+          git config --global user.email "sebastien@poolsea.com"
+          git config --global user.name "seb369888"
 
       - name: Update package version
         run: git stash && npm version ${{github.event.inputs.version}} && git stash pop
