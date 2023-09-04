@@ -48,7 +48,7 @@ jobs:
           git config --global user.name "seb369888"
 
       - name: Update package version
-        run: git stash && npm version ${{github.event.inputs.version}}
+        run: npm version ${{github.event.inputs.version}}
 
       - name: Push version
         uses: ad-m/github-push-action@master
