@@ -26,7 +26,6 @@ jobs:
         with:
           node-version: '16.x'
           registry-url: 'https://npm.pkg.github.com'
-          # Defaults to the user or organization that owns the workflow file
           scope: '@seb369888'
 
       - uses: actions/cache@v3
@@ -54,11 +53,11 @@ jobs:
       - name: Push version
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.GITHUB_ACCESS_TOKEN }}
+          github_token: ${{ secrets.ACCESS_TOKEN }}
           branch: ${{ github.ref }}
 
       - run: npm ci
 
       - run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_ACCESS_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.ACCESS_TOKEN }}
