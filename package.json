@@ -12,13 +12,13 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/Seb369888/poolsea-js.git"
+		"url": "https://github.com/PoolSea-Staking-Pool/poolsea-js.git"
 	},
 	"author": "Poolsea",
 	"bugs": {
-		"url": "https://github.com/Seb369888/poolsea-js/issues"
+		"url": "https://github.com/PoolSea-Staking-Pool/poolsea-js/issues"
 	},
-	"homepage": "https://github.com/Seb369888/poolsea-js#readme",
+	"homepage": "https://github.com/PoolSea-Staking-Pool/poolsea-js#readme",
 	"publishConfig": {
 		"registry": "https://npm.pkg.github.com/"
 	},
