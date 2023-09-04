@@ -1,6 +1,6 @@
 {
 	"name": "@poolSea-staking-pool/poolsea-api",
-	"version": "0.0.3",
+	"version": "1.0.0",
 	"description": "A javascript library for interacting with the Poolsea network",
 	"main": "dist/rocketpool/rocketpool.js",
 	"license": "MIT",
